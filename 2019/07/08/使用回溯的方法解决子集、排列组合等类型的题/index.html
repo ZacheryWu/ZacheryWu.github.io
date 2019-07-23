@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="使用回溯的方法解决子集、排列组合等类型的题在刷leetcode的时候，发现一个答案把这类题目放到了一起，并且都采用了同一种方法解题，感觉很有意思，就自己参照该答案的方法，用js做了一遍，也是很有收获，对于递归和dfs都有了更深的理解。 1. 子集问题（leetcode第78题）Question： Given a set of distinct integers, nums, return all">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用回溯的方法解决子集、排列组合等类型的题">
+<meta property="og:url" content="http://yoursite.com/2019/07/08/使用回溯的方法解决子集、排列组合等类型的题/index.html">
+<meta property="og:site_name" content="Zachery Wu">
+<meta property="og:description" content="使用回溯的方法解决子集、排列组合等类型的题在刷leetcode的时候，发现一个答案把这类题目放到了一起，并且都采用了同一种方法解题，感觉很有意思，就自己参照该答案的方法，用js做了一遍，也是很有收获，对于递归和dfs都有了更深的理解。 1. 子集问题（leetcode第78题）Question： Given a set of distinct integers, nums, return all">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-09T14:35:29.714Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用回溯的方法解决子集、排列组合等类型的题">
+<meta name="twitter:description" content="使用回溯的方法解决子集、排列组合等类型的题在刷leetcode的时候，发现一个答案把这类题目放到了一起，并且都采用了同一种方法解题，感觉很有意思，就自己参照该答案的方法，用js做了一遍，也是很有收获，对于递归和dfs都有了更深的理解。 1. 子集问题（leetcode第78题）Question： Given a set of distinct integers, nums, return all">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/08/使用回溯的方法解决子集、排列组合等类型的题/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>使用回溯的方法解决子集、排列组合等类型的题 | Zachery Wu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zachery Wu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/使用回溯的方法解决子集、排列组合等类型的题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zachery Wu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zachery Wu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用回溯的方法解决子集、排列组合等类型的题
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-08 22:12:29" itemprop="dateCreated datePublished" datetime="2019-07-08T22:12:29+08:00">2019-07-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-09 22:35:29" itemprop="dateModified" datetime="2019-07-09T22:35:29+08:00">2019-07-09</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="使用回溯的方法解决子集、排列组合等类型的题"><a href="#使用回溯的方法解决子集、排列组合等类型的题" class="headerlink" title="使用回溯的方法解决子集、排列组合等类型的题"></a>使用回溯的方法解决子集、排列组合等类型的题</h1><p>在刷leetcode的时候，发现一个答案把这类题目放到了一起，并且都采用了同一种方法解题，感觉很有意思，就自己参照该答案的方法，用js做了一遍，也是很有收获，对于递归和dfs都有了更深的理解。</p>
+<h2 id="1-子集问题（leetcode第78题）"><a href="#1-子集问题（leetcode第78题）" class="headerlink" title="1. 子集问题（leetcode第78题）"></a>1. 子集问题（leetcode第78题）</h2><p><strong>Question</strong>： Given a set of <strong>distinct</strong> integers, <em>nums</em>, return all possible subsets (the power set).</p>
+<p><strong>Note:</strong> The solution set must not contain duplicate subsets.</p>
+<p>（简单来说就是给一组不包含重复数字的数组，列出这个数组的所有子集）</p>
+<p>先放代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; nums</span></span><br><span class="line"><span class="comment"> * @return &#123;number[][]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> subsets = <span class="function"><span class="keyword">function</span>(<span class="params">nums</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> ret = [];</span><br><span class="line">	recursive(ret, [], nums, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[][]&#125; ret </span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; tempArr </span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; nums </span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; start </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> recursive = <span class="function"><span class="keyword">function</span>(<span class="params">ret, tempArr, nums, start</span>) </span>&#123;</span><br><span class="line">	ret.push(tempArr.slice());</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">let</span> i = start; i &lt; nums.length; i++) &#123;</span><br><span class="line">		tempArr.push(nums[i]);</span><br><span class="line">		recursive(ret, tempArr, nums, i+<span class="number">1</span>);</span><br><span class="line">		tempArr.pop();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(subsets([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]))<span class="comment">//[[],[1],[1,2],[1,2,3],[1,3],[2],[2,3],[3]]</span></span><br></pre></td></tr></table></figure>
+<p>这是这类题最基本的情况，只要深度优先遍历就可以得到答案，不需要做任何其他的处理。</p>
+<p>以输入数组[1,2,3]为例过一下代码流程：</p>
+<ol>
+<li>进入recursive，ret 中push进去[]</li>
+<li>进入循环，tempArr中push进去1，然后进入下一层recursive<ol>
+<li>ret中push进去[1]</li>
+<li>进入循环，tempArr中push进去2，变为[1,2],然后进入下一层recursive<ol>
+<li>ret中push进去[1,2]</li>
+<li>进入循环，tempArr中push进去[3],变为[1,2,3]，然后进入下一层recursive<ol>
+<li>ret中push进去[1,2,3]</li>
+<li>进入循环，循环结束，回到上一层recursive</li>
+</ol>
+</li>
+<li>tempArr中pop出来一个3，变为[1,2]，循环结束，回到上一层recursive</li>
+</ol>
+</li>
+<li>tempArr中pop出来一个2，变为[1],继续循环</li>
+<li>tempArr中push进来一个3，变为[1,3],进入下一层recursive<ol>
+<li>ret中push进去[1,3]</li>
+<li>进入循环，循环结束，返回上一层recursive</li>
+</ol>
+</li>
+<li>tempArr中pop出来一个3，变为[1]，循环结束返回上一层</li>
+</ol>
+</li>
+<li>继续循环，tempArr中push进来一个[2]，变为[2]，进入下一层recursive<ol>
+<li>ret中push进去[2]</li>
+<li>进入循环，tempArr中push进来一个3，变为[2,3]进入下一层recursive<ol>
+<li>ret中push进去[2,3]</li>
+<li>进入循环，循环结束，回到上一层recursive</li>
+</ol>
+</li>
+<li>tempArr中pop出来一个[3]，变为[2]，循环结束，返回上一层</li>
+</ol>
+</li>
+<li>tempArr中pop出来一个[2],变为[],继续循环</li>
+<li>tempArr中push进来一个[3],变为[3],进入下一层recursive<ol>
+<li>ret中push进去一个[3]</li>
+<li>进入循环，循环结束，返回上一层recursive</li>
+</ol>
+</li>
+<li>tempArr中pop出来一个3，变为[]，循环结束回到函数subsets</li>
+<li>返回ret</li>
+</ol>
+<p>以上就是整个递归的过程。本质上是使用栈实现了一个dfs。只要理解了整个思想写起来是不难的，但是在写代码的时候需要<strong>注意</strong>，在把tempArr放到ret中的时候，要把复制之后的tempArr放进去，而不是tempArr的本体，因为tempArr作为一个栈，在程序运行过程中是不断地变化的，如果直接把tempArr的引用丢进去的话，最后的ret将得到一个[[],[],[],[],[],[],[],[]]这样的空数组。</p>
+<h2 id="2-子集问题进阶（leetcode-第90题）"><a href="#2-子集问题进阶（leetcode-第90题）" class="headerlink" title="2. 子集问题进阶（leetcode 第90题）"></a>2. 子集问题进阶（leetcode 第90题）</h2><p><strong>Question:</strong>Given a collection of integers that might contain duplicates, <strong>nums</strong>, return all possible subsets (the power set).</p>
+<p><strong>Note:</strong> The solution set must not contain duplicate subsets.</p>
+<p>(和上面的很像，区别在于给的数组中会有重复的数字出现)</p>
+<p>代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 在求nums的子集时，[1,2]和[1,2]是一样的，所以并不能用标记的方式来确保结果的不重复</span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; nums</span></span><br><span class="line"><span class="comment"> * @return &#123;number[][]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> subsetsWithDup = <span class="function"><span class="keyword">function</span>(<span class="params">nums</span>) </span>&#123;</span><br><span class="line">	nums.sort(<span class="function">(<span class="params">a,b</span>) =&gt;</span> a-b);</span><br><span class="line">	<span class="keyword">let</span> ret = [];</span><br><span class="line">	recursive(ret, [], nums, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[][]&#125; ret </span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; tempArr </span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; nums </span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; start </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> recursive = <span class="function"><span class="keyword">function</span>(<span class="params">ret, tempArr, nums, start</span>) </span>&#123;</span><br><span class="line">	ret.push(tempArr.slice());</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">let</span> i = start; i &lt; nums.length; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span>(i &gt; start &amp;&amp; nums[i] === nums[i<span class="number">-1</span>]) <span class="keyword">continue</span>;</span><br><span class="line">		tempArr.push(nums[i]);</span><br><span class="line">		recursive(ret, tempArr, nums, i+<span class="number">1</span>);</span><br><span class="line">		tempArr.pop();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(subsetsWithDup([<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>]))</span><br></pre></td></tr></table></figure>
+<p>和上面那道题一样，都是求子集，所以还是采用深度优先遍历的方法，但是由于传入的数组有重复的存在，并且在结果中判定[1,2]（由1和第一个2组成）和[1,2]（由1和第二个2组成）是一样的，所以在深度优先遍历的时候要过滤掉这些重复的情况。因为[1,2]（由1和第一个2组成）和[1,2]（由1和第二个2组成）是一样的，所以不能通过标记这个数字是否被使用过的方法来过滤重复。</p>
+<p>可以想到，我们要通过判断是不是第一个[1,2]来确定是否过滤，可以发现对于排过序的数组，tempArr为第二个[1,2]的时候，nums[i]===num[i-1] ，可以根据这个条件来进行过滤。但是需要注意的是，在[1,2,2]中也会有读到第二个2的情况，所以我们不能把所有的非第一次出现的数字都过滤掉。我们可以通过i&gt;start来判断，这是不是这个回溯的第一层循环，如果不是第一层循环，并且nums[i]===nums[i-1]就说明，这是第二个[1,2]而不是[1,2,2]的情况。因此，通过(i &gt; start &amp;&amp; nums[i] === nums[i-1])这个判断条件就能够刚好成功的过滤掉所有重复的情况。</p>
+<h2 id="3-排列组合问题（leetcode-46题）"><a href="#3-排列组合问题（leetcode-46题）" class="headerlink" title="3. 排列组合问题（leetcode 46题）"></a>3. 排列组合问题（leetcode 46题）</h2><p><strong>Question:</strong>Given a collection of <strong>distinct</strong> integers, return all possible permutations.</p>
+<p>代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 在这种列出所有组合的题中，由于每个item都只能使用一次，正是标志位使用的好时候</span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; nums</span></span><br><span class="line"><span class="comment"> * @return &#123;number[][]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> permute = <span class="function"><span class="keyword">function</span>(<span class="params">nums</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> used = nums.map(<span class="function"><span class="params">()</span> =&gt;</span> <span class="literal">false</span>),</span><br><span class="line">		ret = [];</span><br><span class="line">	recursive(ret, nums, [], used);</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> recursive = <span class="function"><span class="keyword">function</span>(<span class="params">ret, nums, tempArr, used</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(tempArr.length === nums.length) &#123;</span><br><span class="line">		ret.push(tempArr.slice());</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span> ; i &lt; nums.length; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(used[i]) <span class="keyword">continue</span>;</span><br><span class="line">			used[i] = <span class="literal">true</span>;</span><br><span class="line">			tempArr.push(nums[i]);</span><br><span class="line">			recursive(ret, nums, tempArr, used);</span><br><span class="line">			used[i] = <span class="literal">false</span>;</span><br><span class="line">			tempArr.pop();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(permute([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]));</span><br></pre></td></tr></table></figure>
+<p>这种排列组合的问题，由于每一项都只能用一次，所以可以用标记项的方法来进行过滤，所以我单独创建了一个数组用来保存每一项的状态，表示该项是否已经使用过。递归结束条件和之前的递归到底就结束也不太一样了，但还是很简单，只要tempArr中已经包含了所有的数字，就说明这一个排列组合已经完成了，那么这个递归就结束了，把这个递归结果存起来，然后进行回溯，去进行其他排列组合的遍历。</p>
+<h2 id="4-排列组合问题进阶-leetcode-47题"><a href="#4-排列组合问题进阶-leetcode-47题" class="headerlink" title="4. 排列组合问题进阶(leetcode 47题)"></a>4. 排列组合问题进阶(leetcode 47题)</h2><p><strong>Question:</strong> Given a collection of numbers that might contain duplicates, return all possible unique permutations.</p>
+<p>代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; nums</span></span><br><span class="line"><span class="comment"> * @return &#123;number[][]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> permuteUnique = <span class="function"><span class="keyword">function</span>(<span class="params">nums</span>) </span>&#123;</span><br><span class="line">	nums.sort(<span class="function">(<span class="params">a,b</span>) =&gt;</span> a-b);</span><br><span class="line">	<span class="keyword">let</span> used = nums.map(<span class="function"><span class="params">()</span> =&gt;</span> <span class="literal">false</span>),</span><br><span class="line">		ret = [];</span><br><span class="line">	recursive(ret, nums, [], used);</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> recursive = <span class="function"><span class="keyword">function</span>(<span class="params">ret, nums, tempArr, used</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(tempArr.length === nums.length) &#123;</span><br><span class="line">		ret.push(tempArr.slice());</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(used[i] || (nums[i] === nums[i<span class="number">-1</span>] &amp;&amp; !used[i<span class="number">-1</span>])) <span class="keyword">continue</span>;</span><br><span class="line">			used[i] = <span class="literal">true</span>;</span><br><span class="line">			tempArr.push(nums[i]);</span><br><span class="line">			recursive(ret, nums, tempArr, used);</span><br><span class="line">			used[i] = <span class="literal">false</span>;</span><br><span class="line">			tempArr.pop();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(permuteUnique([<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>]));</span><br></pre></td></tr></table></figure>
+<p>同样是排列组合的问题，所以还是创建一个数组来标记某一项是否用过。但是和上一道排列组合有所不同的是，在给的数组中有重复数字的存在，并且在每个排列中相同数字交换位置视为同一种排列，因此也需要进行过滤。</p>
+<p>一开始打算采用和子集问题进阶(leetcode90题)一样的方法进行解决，却发现由于在排列问题中，每次循环都是从0开始的，因此不能够使用i和start的比较来判断是否是某个递归的第一层循环，此方法行不通。但是这次我们多了一个used数组，所以可以这样判断，在这一项的数字和前一项的数字相同时（数组已排序），</p>
+<ul>
+<li>如果前一项已经使用过，那么这个排列是第一次出现（因为我们的遍历是从前到后的），我们继续这个遍历</li>
+<li>如果前一项并没有使用过，那么说明这一个排列(1,1,2)是之前排列(1,1,2)的这两个相同数字的交换的结果（两个1交换了顺序），这时跳过这次遍历。</li>
+</ul>
+<h2 id="5-组合求和问题（leetcode-39题）"><a href="#5-组合求和问题（leetcode-39题）" class="headerlink" title="5. 组合求和问题（leetcode 39题）"></a>5. 组合求和问题（leetcode 39题）</h2><p><strong>Question:</strong> Given a <strong>set</strong> of candidate numbers (<code>candidates</code>) <strong>(without duplicates)</strong> and a target number (<code>target</code>), find all unique combinations in <code>candidates</code> where the candidate numbers sums to <code>target</code>.</p>
+<p>The <strong>same</strong> repeated number may be chosen from <code>candidates</code> unlimited number of times.</p>
+<p><strong>Note:</strong></p>
+<ul>
+<li>All numbers (including <code>target</code>) will be positive integers.</li>
+<li>The solution set must not contain duplicate combinations.</li>
+</ul>
+<p>代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; candidates</span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; target</span></span><br><span class="line"><span class="comment"> * @return &#123;number[][]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> combinationSum = <span class="function"><span class="keyword">function</span>(<span class="params">candidates, target</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> ret = [];</span><br><span class="line">	recursive(ret, candidates, [], target, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * @param &#123;number[][]&#125; ret </span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; candidates </span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; tmepArr </span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; remain </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> recursive = <span class="function"><span class="keyword">function</span>(<span class="params">ret, candidates, tmepArr, remain, start</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(remain &lt; <span class="number">0</span>) <span class="keyword">return</span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(remain === <span class="number">0</span>) &#123;</span><br><span class="line">		ret.push(tmepArr.slice());</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">let</span> i = start; i &lt; candidates.length; i++) &#123;</span><br><span class="line">			tmepArr.push(candidates[i]);</span><br><span class="line">			recursive(ret, candidates, tmepArr, remain-candidates[i], i);</span><br><span class="line">			tmepArr.pop();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// console.log(combinationSum([2,3,6,7], 7));</span></span><br><span class="line"><span class="built_in">console</span>.log(combinationSum([<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>], <span class="number">8</span>));</span><br></pre></td></tr></table></figure>
+<p>从候选数组中找出所有的和为target的子集，其实是之前的子集问题(leetcode 78题 subset)的进阶，对找出的子集再进行一次筛选而已，但是如果先找到所有的子集再进行筛选，这样的时间复杂度无疑是很高的，所以在遍历的同时进行筛选，就能少遍历一些不可能的分支，从而提高效率。</p>
+<p>我采取的方法是这样的，在遍历的同时，对于已经遍历到的元素</p>
+<ul>
+<li>如果和已经大于了目标数，那么说明这个分支再往下走也不可能满足条件了，因为给出的候选数都是正数，因此这次递归结束，回到上一层递归，继续遍历。</li>
+<li>如果和等于目标数，那么说明这个分支已经满足了要求，把这个分支中的数放到结果数组中，结束这次递归，回到上一层递归，继续遍历。</li>
+<li>如果和小于目标数，那么说明这次递归还要继续，因此继续递归，直到满足条件。</li>
+</ul>
+<p>还有一点需要注意的是，循环是从上层递归的那个元素开始的，因为在这个问题中，每一项都可以使用多次。但是也不能从零开始，因为如果从零开始，那么[2,3,3]和[3,2,3]以及[3,3,2]都会出现在结果中。</p>
+<h2 id="6-组合求和问题进阶-leetcode-40题"><a href="#6-组合求和问题进阶-leetcode-40题" class="headerlink" title="6.组合求和问题进阶(leetcode 40题)"></a>6.组合求和问题进阶(leetcode 40题)</h2><p><strong>Question: </strong>Given a collection of candidate numbers (<code>candidates</code>) and a target number (<code>target</code>), find all unique combinations in <code>candidates</code> where the candidate numbers sums to <code>target</code>.</p>
+<p>Each number in <code>candidates</code> may only be used <strong>once</strong> in the combination.</p>
+<p><strong>Note:</strong></p>
+<ul>
+<li>All numbers (including <code>target</code>) will be positive integers.</li>
+<li>The solution set must not contain duplicate combinations.</li>
+</ul>
+<p>代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; candidates</span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; target</span></span><br><span class="line"><span class="comment"> * @return &#123;number[][]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> combinationSum2 = <span class="function"><span class="keyword">function</span>(<span class="params">candidates, target</span>) </span>&#123;</span><br><span class="line">	candidates = candidates.sort(<span class="function">(<span class="params">a,b</span>) =&gt;</span> a-b);</span><br><span class="line">	<span class="keyword">let</span> ret = [];</span><br><span class="line">	recursive(ret, candidates, [], target, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> recursive = <span class="function"><span class="keyword">function</span>(<span class="params">ret, candidates, tempArr, remain, start</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(remain &lt; <span class="number">0</span>) <span class="keyword">return</span> </span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(remain === <span class="number">0</span>) ret.push(tempArr.slice())</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">let</span> i = start; i &lt; candidates.length; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(candidates[i] === candidates[i<span class="number">-1</span>] &amp;&amp; i &gt; start) <span class="keyword">continue</span>;</span><br><span class="line">			tempArr.push(candidates[i]);</span><br><span class="line">			recursive(ret, candidates, tempArr, remain-candidates[i], i+<span class="number">1</span>);</span><br><span class="line">			tempArr.pop();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(combinationSum2([<span class="number">2</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>], <span class="number">5</span>));</span><br></pre></td></tr></table></figure>
+<p>这个问题是上面的进阶，现在给出的数组中有些数字是重复的，并且每一项都只能使用一次。看到这个条件是不是有点眼熟，对，就是上面提到的第二个问题（子集问题进阶，leetcode90），相当于是第五个问题和第二个问题结合起来了。用到了组合求和问题（leetcode39）的递归结束部分，以及子集进阶问题（leetcode90）的筛选部分。思路和上面的问题是完全一样的，在此不再赘述。</p>
+<h2 id="7-回文分区问题-leetcode-131"><a href="#7-回文分区问题-leetcode-131" class="headerlink" title="7. 回文分区问题(leetcode 131)"></a>7. 回文分区问题(leetcode 131)</h2><p><strong>Question: </strong> Given a string <em>s</em>, partition <em>s</em> such that every substring of the partition is a palindrome.</p>
+<p>Return all possible palindrome partitioning of <em>s</em>.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; s</span></span><br><span class="line"><span class="comment"> * @return &#123;string[][]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> partition = <span class="function"><span class="keyword">function</span>(<span class="params">s</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> ret = [];</span><br><span class="line">	recursive(ret, s, [], <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * @param &#123;string[]&#125; ret </span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; s </span></span><br><span class="line"><span class="comment"> * @param &#123;string[]&#125; tempArr </span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; start </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> recursive = <span class="function"><span class="keyword">function</span>(<span class="params">ret, s, tempArr, start</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(start === s.length) ret.push(tempArr.slice());</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">let</span> i = start; i &lt; s.length; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(isPalindrome(s, start, i)) &#123;</span><br><span class="line">				tempArr.push(s.slice(start, i+<span class="number">1</span>));</span><br><span class="line">				recursive(ret, s, tempArr, i+<span class="number">1</span>);</span><br><span class="line">				tempArr.pop();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; s </span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; start </span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; end </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> isPalindrome = <span class="function"><span class="keyword">function</span>(<span class="params">s, start, end</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(start &lt; end) &#123;</span><br><span class="line">		<span class="keyword">if</span>(s.charAt(start++) !== s.charAt(end--)) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(partition(<span class="string">"aab"</span>));</span><br><span class="line"><span class="comment">/*[</span></span><br><span class="line"><span class="comment">  ["aa","b"],</span></span><br><span class="line"><span class="comment">  ["a","a","b"]</span></span><br><span class="line"><span class="comment">]*/</span></span><br></pre></td></tr></table></figure>
+<p>这个问题乍一看似乎不能通过深度优先遍历的方法来解决，其实仔细想一想还是第一个问题的变种，都是找到给出的数组子集，只不过这个问题给出的不是数组，而是字符串罢了。既然想通了这点，还套着原来的步骤来就可以了，只不过在判断某个子集是否是满足条件的时有一点小麻烦。</p>
+<p>我采用的方法是判断这个start标记位是否已经到达了这个字符串的最后，如果到了最后那就说明这个子集tempArr中已经包含了这个字符串中的所有字符，并且在把子字符串加到tempArr中时，已经判断过了这个字符串是不是回文，所以能保证所有加到tempArr中的字符串都是回文的。因此，当tempArr中已经包含了这个字符串中的所有字符时，就说明tempArr已经是满足条件的一种排列。 </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这七道题做下来，可以感觉得到，后面六题其实都是第一道题的变种罢了。其中变化的是给的数组的形式，包括正整数，重复的正整数，字符串。另一个变化就是要求输出的数组的规则，子集，排列组合，和为目标数，回文串等等。根据这些变化，求修改递归结束的条件，以及在循环中的筛选条件，再稍微修改一些循环的细节，就能够得到满足条件的输出。</p>
+<p>因此，对于这类题目，近乎可以用套模板的方式解决，只要根据题目情况想清楚递归的结束条件，以及筛选的方法就可以了。当然，有时候递归的结束条件和筛选方法并不容易想到，所以，还是多做题吧。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/06/vue.js双向数据绑定/" rel="next" title="vue.js双向数据绑定">
+                <i class="fa fa-chevron-left"></i> vue.js双向数据绑定
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zachery Wu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用回溯的方法解决子集、排列组合等类型的题"><span class="nav-number">1.</span> <span class="nav-text">使用回溯的方法解决子集、排列组合等类型的题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-子集问题（leetcode第78题）"><span class="nav-number">1.1.</span> <span class="nav-text">1. 子集问题（leetcode第78题）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-子集问题进阶（leetcode-第90题）"><span class="nav-number">1.2.</span> <span class="nav-text">2. 子集问题进阶（leetcode 第90题）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-排列组合问题（leetcode-46题）"><span class="nav-number">1.3.</span> <span class="nav-text">3. 排列组合问题（leetcode 46题）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-排列组合问题进阶-leetcode-47题"><span class="nav-number">1.4.</span> <span class="nav-text">4. 排列组合问题进阶(leetcode 47题)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-组合求和问题（leetcode-39题）"><span class="nav-number">1.5.</span> <span class="nav-text">5. 组合求和问题（leetcode 39题）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-组合求和问题进阶-leetcode-40题"><span class="nav-number">1.6.</span> <span class="nav-text">6.组合求和问题进阶(leetcode 40题)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-回文分区问题-leetcode-131"><span class="nav-number">1.7.</span> <span class="nav-text">7. 回文分区问题(leetcode 131)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.8.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zachery Wu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+<div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+本站总访问量 <span id="busuanzi_value_site_pv"></span> 次&nbsp&nbsp&nbsp
+本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.1"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
