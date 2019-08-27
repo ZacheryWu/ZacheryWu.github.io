@@ -104,12 +104,12 @@
 <meta property="og:site_name" content="Zachery Wu">
 <meta property="og:description" content="前言Vue.js有很多有用的特性，其中最显著的就是双向绑定，第一次接触到Vue.js的时候，就被这种简单方便的特性吸引了。现在自己也尝试着用Vue.js中使用的Object.defineProperty来实现双向绑定。 最终的效果是：  12345678910111213&amp;lt;div id=&quot;app&quot;&amp;gt;	&amp;lt;input type=&quot;text&quot; v-model=&apos;text&apos;&amp;gt;	&amp;#">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://po73p2mik.bkt.clouddn.com/vueSlef_result.gif">
-<meta property="og:updated_time" content="2019-03-24T03:27:23.891Z">
+<meta property="og:image" content="https://i.loli.net/2019/08/27/Qs3xhNyMtFgkdaD.gif">
+<meta property="og:updated_time" content="2019-08-27T14:11:31.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue.js双向数据绑定">
 <meta name="twitter:description" content="前言Vue.js有很多有用的特性，其中最显著的就是双向绑定，第一次接触到Vue.js的时候，就被这种简单方便的特性吸引了。现在自己也尝试着用Vue.js中使用的Object.defineProperty来实现双向绑定。 最终的效果是：  12345678910111213&amp;lt;div id=&quot;app&quot;&amp;gt;	&amp;lt;input type=&quot;text&quot; v-model=&apos;text&apos;&amp;gt;	&amp;#">
-<meta name="twitter:image" content="http://po73p2mik.bkt.clouddn.com/vueSlef_result.gif">
+<meta name="twitter:image" content="https://i.loli.net/2019/08/27/Qs3xhNyMtFgkdaD.gif">
 
 
 
@@ -351,7 +351,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-24 11:27:23" itemprop="dateModified" datetime="2019-03-24T11:27:23+08:00">2019-03-24</time>
+                <time title="修改时间：2019-08-27 22:11:31" itemprop="dateModified" datetime="2019-08-27T22:11:31+08:00">2019-08-27</time>
               
             
           </span>
@@ -422,7 +422,7 @@
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>Vue.js</code>有很多有用的特性，其中最显著的就是双向绑定，第一次接触到<code>Vue.js</code>的时候，就被这种简单方便的特性吸引了。现在自己也尝试着用<code>Vue.js</code>中使用的<code>Object.defineProperty</code>来实现双向绑定。</p>
 <p>最终的效果是：</p>
-<p><img src="http://po73p2mik.bkt.clouddn.com/vueSlef_result.gif" alt="result"></p>
+<p><img src="https://i.loli.net/2019/08/27/Qs3xhNyMtFgkdaD.gif" alt="vueSlef_result.gif"></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">v-model</span>=<span class="string">'text'</span>&gt;</span></span><br><span class="line">	&#123;&#123;text&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./Vue.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">	<span class="keyword">let</span> vm = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">		el: <span class="string">'app'</span>,</span></span><br><span class="line"><span class="undefined">		data: &#123;</span></span><br><span class="line"><span class="javascript">			text: <span class="string">'Hello Vue!'</span></span></span><br><span class="line"><span class="undefined">		&#125;</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="分步实现"><a href="#分步实现" class="headerlink" title="分步实现"></a>分步实现</h2><p>看起来只是一个简单的双向绑定的功能，其实可以分为三个小的步骤：</p>
 <ul>
