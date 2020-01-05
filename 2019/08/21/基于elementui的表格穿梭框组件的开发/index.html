@@ -104,12 +104,12 @@
 <meta property="og:description" content="在开发过程中需要用到一个表格的穿梭框，但发现elementui中的穿梭框不支持自定义，本着不重复造轮子的原则去npm上找了一圈，并没有找到，那只能自己撸一个了。最终的效果是这样的：其实这个组件很简单，两个可以复选的表格，以及两个控制移动的按钮就完成了，不过后续也在这个的基础上添加了一些功能，如禁用某一行的勾选，对表格中数据显示的自定义，等等。 因为想要尝试一下将组件发布到npm上，所以和平时的Vu">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://i.loli.net/2019/08/27/UZl28uzeiCgtsIP.gif">
-<meta property="og:image" content="https://i.loli.net/2019/08/27/jbmhROl1HutMPxS.png">
+<meta property="og:image" content="g:/hexo/blog/source/images/1566779888233.png">
 <meta property="og:image" content="https://i.loli.net/2019/08/27/J5Bthvrx8q4HlXA.png">
-<meta property="og:image" content="https://i.loli.net/2019/08/27/F3Erhp9fzKOcTka.png">
-<meta property="og:image" content="https://i.loli.net/2019/08/27/d9MGjUDRnq7mu6Z.png">
-<meta property="og:image" content="https://i.loli.net/2019/08/27/IOcKiBwvCoshgtb.png">
-<meta property="og:updated_time" content="2019-08-27T14:14:06.638Z">
+<meta property="og:image" content="g:/hexo/blog/source/images/1566868076154.png">
+<meta property="og:image" content="g:/hexo/blog/source/images/1566913492883.png">
+<meta property="og:image" content="g:/hexo/blog/source/images/1566913595334.png">
+<meta property="og:updated_time" content="2019-08-27T16:19:33.111Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于elementui的表格穿梭框组件的开发">
 <meta name="twitter:description" content="在开发过程中需要用到一个表格的穿梭框，但发现elementui中的穿梭框不支持自定义，本着不重复造轮子的原则去npm上找了一圈，并没有找到，那只能自己撸一个了。最终的效果是这样的：其实这个组件很简单，两个可以复选的表格，以及两个控制移动的按钮就完成了，不过后续也在这个的基础上添加了一些功能，如禁用某一行的勾选，对表格中数据显示的自定义，等等。 因为想要尝试一下将组件发布到npm上，所以和平时的Vu">
@@ -355,7 +355,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-27 22:14:06" itemprop="dateModified" datetime="2019-08-27T22:14:06+08:00">2019-08-27</time>
+                <time title="修改时间：2019-08-28 00:19:33" itemprop="dateModified" datetime="2019-08-28T00:19:33+08:00">2019-08-28</time>
               
             
           </span>
@@ -436,7 +436,7 @@
 <h2 id="搭建组件开发环境"><a href="#搭建组件开发环境" class="headerlink" title="搭建组件开发环境"></a>搭建组件开发环境</h2><p>在整个开发过程中，环境的搭建对于没有发布过组件的我来说才是最复杂的。</p>
 <p>前面也提到了想要发布到npm上的话并不能仅仅开发一个单页面组件，而是要对这个组件进行一定的封装，并且经过webpack的打包，最好还能够支持多种引入的方式。</p>
 <p>这是我的文件目录：</p>
-<p><img src="https://i.loli.net/2019/08/27/jbmhROl1HutMPxS.png" alt="1566779888233.png"></p>
+<p><img src="G:\hexo\blog\source\images\1566779888233.png" alt="1566779888233"></p>
 <p>代码部分主要由两部分组成,examples和packages。顾名思义，examples中放的是示例文件，packages中放的则是我们这次开发的组件。之所以要把elTableTransfer 放到packages里面，是因为在组件的开发中可能会有这一套组件不止一个的情况，这种情况下，就可以把整套组件从packages中打包、导出。</p>
 <p>使用vue-cli3创建的文件结构是这样的：</p>
 <p><img src="https://i.loli.net/2019/08/27/J5Bthvrx8q4HlXA.png" alt="1566780195124.png"></p>
@@ -475,12 +475,12 @@
 <p>因此在package.json中添加命令：</p>
 <p><code>&quot;lib&quot;: &quot;vue-cli-service build --target lib --name eltabletransfer --dest lib packages/index.js&quot;</code></p>
 <p>打包结果：</p>
-<p><img src="https://i.loli.net/2019/08/27/F3Erhp9fzKOcTka.png" alt="1566868076154.png"></p>
+<p><img src="G:\hexo\blog\source\images\1566868076154.png" alt="1566868076154"></p>
 <p>在发布之前还要注意一下package.json中的一些信息，比如name、version等等，还有private必须是false，否则是无法发布的。除此之外还要添加一个<code>.npmignore</code>文件，用来忽略一些不想发布上去的文件和文件夹。</p>
 <p>接下来就登陆自己的npm账号</p>
-<p><img src="https://i.loli.net/2019/08/27/d9MGjUDRnq7mu6Z.png" alt="1566913492883.png"></p>
+<p><img src="G:\hexo\blog\source\images\1566913492883.png" alt="1566913492883"></p>
 <p>然后执行<code>npm publish</code> 命令，等上几秒钟，就可以在npm上看到自己发布的组件了!</p>
-<p><img src="https://i.loli.net/2019/08/27/IOcKiBwvCoshgtb.png" alt="1566913595334.png"></p>
+<p><img src="G:\hexo\blog\source\images\1566913595334.png" alt="1566913595334"></p>
 <h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://www.npmjs.com/package/el-table-transfer" target="_blank" rel="noopener">npm地址</a></p>
 <p><a href>github地址</a></p>
 <h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="https://juejin.im/post/5bbab9de5188255c8c0cb0e3" target="_blank" rel="noopener">详解：Vue cli3 库模式搭建组件库并发布到 npm</a></p>
@@ -669,7 +669,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
