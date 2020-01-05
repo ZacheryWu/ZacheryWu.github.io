@@ -79,7 +79,7 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy: 
   type: git
-  repo: git@66.112.213.7:/var/repo/blog.git
+  repo: https://github.com/ZacheryWu/ZacheryWu.github.io
   branch: master
 
 symbols_count_time:
