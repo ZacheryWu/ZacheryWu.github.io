@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言Vue.js有很多有用的特性，其中最显著的就是双向绑定，第一次接触到Vue.js的时候，就被这种简单方便的特性吸引了。现在自己也尝试着用Vue.js中使用的Object.defineProperty来实现双向绑定。 最终的效果是：  12345678910111213&amp;lt;div id=&quot;app&quot;&amp;gt;	&amp;lt;input type=&quot;text&quot; v-model=&apos;text&apos;&amp;gt;	&amp;#">
+<meta name="keywords" content="vue.js学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue.js双向数据绑定">
+<meta property="og:url" content="http://yoursite.com/2019/03/06/vue.js双向数据绑定/index.html">
+<meta property="og:site_name" content="Zachery Wu">
+<meta property="og:description" content="前言Vue.js有很多有用的特性，其中最显著的就是双向绑定，第一次接触到Vue.js的时候，就被这种简单方便的特性吸引了。现在自己也尝试着用Vue.js中使用的Object.defineProperty来实现双向绑定。 最终的效果是：  12345678910111213&amp;lt;div id=&quot;app&quot;&amp;gt;	&amp;lt;input type=&quot;text&quot; v-model=&apos;text&apos;&amp;gt;	&amp;#">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2019/08/27/Qs3xhNyMtFgkdaD.gif">
+<meta property="og:updated_time" content="2019-08-27T14:11:31.495Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue.js双向数据绑定">
+<meta name="twitter:description" content="前言Vue.js有很多有用的特性，其中最显著的就是双向绑定，第一次接触到Vue.js的时候，就被这种简单方便的特性吸引了。现在自己也尝试着用Vue.js中使用的Object.defineProperty来实现双向绑定。 最终的效果是：  12345678910111213&amp;lt;div id=&quot;app&quot;&amp;gt;	&amp;lt;input type=&quot;text&quot; v-model=&apos;text&apos;&amp;gt;	&amp;#">
+<meta name="twitter:image" content="https://i.loli.net/2019/08/27/Qs3xhNyMtFgkdaD.gif">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/06/vue.js双向数据绑定/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>vue.js双向数据绑定 | Zachery Wu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zachery Wu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/06/vue.js双向数据绑定/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zachery Wu">
+      <meta itemprop="description" content="吴子轩的个人博客">
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zachery Wu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue.js双向数据绑定
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-06 16:45:01" itemprop="dateCreated datePublished" datetime="2019-03-06T16:45:01+08:00">2019-03-06</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">26k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">7 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>Vue.js</code>有很多有用的特性，其中最显著的就是双向绑定，第一次接触到<code>Vue.js</code>的时候，就被这种简单方便的特性吸引了。现在自己也尝试着用<code>Vue.js</code>中使用的<code>Object.defineProperty</code>来实现双向绑定。</p>
+<p>最终的效果是：</p>
+<p><img src="https://i.loli.net/2019/08/27/Qs3xhNyMtFgkdaD.gif" alt="vueSlef_result.gif"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">v-model</span>=<span class="string">'text'</span>&gt;</span></span><br><span class="line">	&#123;&#123;text&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./Vue.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">	<span class="keyword">let</span> vm = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">		el: <span class="string">'app'</span>,</span></span><br><span class="line"><span class="undefined">		data: &#123;</span></span><br><span class="line"><span class="javascript">			text: <span class="string">'Hello Vue!'</span></span></span><br><span class="line"><span class="undefined">		&#125;</span></span><br><span class="line"><span class="undefined">	&#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="分步实现"><a href="#分步实现" class="headerlink" title="分步实现"></a>分步实现</h2><p>看起来只是一个简单的双向绑定的功能，其实可以分为三个小的步骤：</p>
+<ul>
+<li>解析html，把html中<code>{ {text} }</code>替换，并且给input赋值。</li>
+<li>把input的改变同步到data中的对应数据上。</li>
+<li>把data中数据的改变同步到html中绑定的数据上。</li>
+</ul>
+<h3 id="解析html"><a href="#解析html" class="headerlink" title="解析html"></a>解析html</h3><p>由于只是实现一个简单的双向绑定，所以只对<code>{ { } }</code>和<code>v-model</code> 进行解析，并且只考虑了只有一层dom节点的情况。距离实际使用还差得远呢。（这里hexo对这个双大括号无法解析，只能加了几个空格😔）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vue</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>(options) &#123;</span><br><span class="line">		<span class="keyword">this</span>.el = options.el;</span><br><span class="line">		<span class="keyword">this</span>.data = options.data;</span><br><span class="line">		<span class="keyword">let</span> root = <span class="built_in">document</span>.getElementById(<span class="keyword">this</span>.el);</span><br><span class="line">		<span class="keyword">let</span> frag = <span class="keyword">this</span>.node2Fragment(root);</span><br><span class="line">		root.appendChild(frag);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 把dom转化为documentFragment，可以带来更好的性能。</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	node2Fragment(node) &#123;</span><br><span class="line">		<span class="keyword">let</span> retFrag = <span class="built_in">document</span>.createDocumentFragment();</span><br><span class="line">		<span class="keyword">let</span> child;</span><br><span class="line">		<span class="keyword">while</span>(child = node.firstChild) &#123;</span><br><span class="line">			<span class="keyword">this</span>.compile(child);</span><br><span class="line">			retFrag.appendChild(child);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> retFrag;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 对dom节点进行解析，把data中的数据替换上去</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	compile(node) &#123;</span><br><span class="line">		<span class="keyword">let</span> reg = <span class="regexp">/\&#123;\&#123;(.*)\&#125;\&#125;/</span>;</span><br><span class="line">		<span class="keyword">if</span>(node.nodeType === <span class="number">1</span>) &#123;</span><br><span class="line">			<span class="keyword">let</span> attrs = node.attributes;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; attrs.length; i++) &#123;</span><br><span class="line">				<span class="keyword">if</span>(attrs[i].nodeName == <span class="string">'v-model'</span>) &#123;</span><br><span class="line">					node.value = <span class="keyword">this</span>.data[attrs[i].nodeValue];</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span>(node.nodeType === <span class="number">3</span>) &#123;</span><br><span class="line">			<span class="keyword">if</span>(reg.test(node.nodeValue)) &#123;</span><br><span class="line">				<span class="keyword">let</span> dataKey = <span class="built_in">RegExp</span>.$<span class="number">1</span>;</span><br><span class="line">				dataKey = dataKey.trim();</span><br><span class="line">				node.nodeValue = <span class="keyword">this</span>.data[dataKey];</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>学习这部分源码时遇到的问题：</p>
+<ol>
+<li><p><code>document.createDoumentFragment()</code></p>
+<p>通过这个方法可以创建一个指向空documentFragment对象的引用，documentFragment也是DOM节点，但是不是DOM树的一部分，通常用来创建文档片段，将元素附加到文档片段。在把documentFragment添加到DOM树时，文档片段会被它的子元素所替代。</p>
+<p>因为文档片段只存在于内存中而不是DOM树中，所以将子元素插入到文档片段时不会引起页面的回流，因此使用文档片段可以提高页面的性能。</p>
+</li>
+<li><p><code>appendChild</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(child = node.firstChild) &#123;</span><br><span class="line">    <span class="keyword">this</span>.compile(child);</span><br><span class="line">    retFrag.appendChild(child);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看到上面这段代码的时候，很疑惑，因为没有找到循环的变化。查阅资料后发现，appendChild在把参数节点添加过去的同时，也会从原节点上删除这个参数节点。（简单点说就是剪切操作！而不是复制操作。）</p>
+</li>
+<li><p><code>node.nodeType</code></p>
+<p>用来表示节点的类型，代码中用到了1和三，1表示文本节点，一般是element或者attr中实际的文字；3表示元素节点，比如div、p等等。(并不是带标签的都是3，span和img就是1)</p>
+</li>
+<li><p><code>node.attributes</code></p>
+<p>这个属性表示node上的所有attr，需要注意的是，node.attributes虽然也有length属性，但是却并不是数组。</p>
+</li>
+</ol>
+<h3 id="把input的value变化同步到data中"><a href="#把input的value变化同步到data中" class="headerlink" title="把input的value变化同步到data中"></a>把input的value变化同步到data中</h3><p>这一步其实很简单，只需要给input添加一个事件，在input改变的时候同时修改data就可以了。</p>
+<p>所以修改一下compile方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">compile(node) &#123;</span><br><span class="line">    <span class="keyword">let</span> reg = <span class="regexp">/\&#123;\&#123;(.*)\&#125;\&#125;/</span>;</span><br><span class="line">    <span class="keyword">if</span>(node.nodeType === <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> attrs = node.attributes;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; attrs.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(attrs[i].nodeName == <span class="string">'v-model'</span>) &#123;</span><br><span class="line">                node.addEventListener(<span class="string">'input'</span>, (e) =&gt; &#123;</span><br><span class="line">                    <span class="keyword">this</span>.data[attrs[i].nodeValue] = e.target.value;</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="keyword">this</span>.data[attrs[i].nodeValue]);</span><br><span class="line">                &#125;)</span><br><span class="line">                node.value = <span class="keyword">this</span>.data[attrs[i].nodeValue];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(node.nodeType === <span class="number">3</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span>(reg.test(node.nodeValue)) &#123;</span><br><span class="line">            <span class="keyword">let</span> dataKey = <span class="built_in">RegExp</span>.$<span class="number">1</span>;</span><br><span class="line">            dataKey = dataKey.trim();</span><br><span class="line">            node.nodeValue = <span class="keyword">this</span>.data[dataKey];</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="同步data中的数据改动同步到视图"><a href="#同步data中的数据改动同步到视图" class="headerlink" title="同步data中的数据改动同步到视图"></a>同步data中的数据改动同步到视图</h3><p>这一步才是实现双向绑定的重点，通过Object.defineProperty 修改data的访问器属性，从而达到对于数据变化的劫持，劫持到之后通知视图进行变化。简单点说就是通过Object.defineProperty实现一个观察者模式。</p>
+<ol>
+<li><p>首先劫持到对data的访问</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(options) &#123;</span><br><span class="line">    <span class="keyword">this</span>.el = options.el;</span><br><span class="line">    <span class="keyword">this</span>.data = options.data;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.observe(<span class="keyword">this</span>.data);</span><br><span class="line">    <span class="keyword">let</span> root = <span class="built_in">document</span>.getElementById(<span class="keyword">this</span>.el);</span><br><span class="line">    <span class="keyword">let</span> frag = <span class="keyword">this</span>.node2Fragment(root);</span><br><span class="line">    root.appendChild(frag);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">observe(data) &#123;</span><br><span class="line">    <span class="built_in">Object</span>.keys(data).forEach(<span class="function">(<span class="params">prop</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.defineReactive(prop, data[prop]);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">defineReactive(prop, value) &#123;</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(<span class="keyword">this</span>, prop, &#123;</span><br><span class="line">        <span class="keyword">get</span>: function() &#123;</span><br><span class="line">            <span class="keyword">return</span> value;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="keyword">set</span>: function(newValue) &#123;</span><br><span class="line">            <span class="keyword">if</span>(value === newValue) <span class="keyword">return</span>;</span><br><span class="line">            value = newValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>get可以劫持到对data属性的读操作，set可以劫持到写操作。我们在劫持的同时把data加到了Vue的上，方便我们的访问，所以对于data的访问就可以简写为<code>this.prop</code>。（prop是data中的属性）</p>
+</li>
+</ol>
+<ol start="2">
+<li><p>接下来要做的就是收集依赖，并且在数据发生改变时通知依赖变化。</p>
+<p>之前我一直搞不懂是怎么收集依赖的，在这次学习时终于想通了，原来是这么的简单。<code>如果一个数据a依赖数据b，那么在计算a的值时必然回去读取b的值。</code>所以在读取数据的时候，也就是触发访问器属性中的get时就可以完成依赖的收集。</p>
+<p>相同的，在数据发生变化时，通过访问器中的set就可以通知到这个数据的watcher（监听器）去同步视图的变化。</p>
+<p>所以我们要做的就是构造一个Dep（主题）和一个Watcher（监听器），然后在set和get的时候添加依赖和触发监听。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Watcher</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>(node, name, vm) &#123;</span><br><span class="line">		<span class="comment">//标记自身，方便Dep收集依赖</span></span><br><span class="line">		Dep.target = <span class="keyword">this</span>;</span><br><span class="line">		<span class="keyword">this</span>.node = node;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="keyword">this</span>.vm = vm;</span><br><span class="line">		<span class="keyword">this</span>.getVal();</span><br><span class="line">		<span class="comment">//收集完依赖后将target置为空</span></span><br><span class="line">		Dep.target = <span class="literal">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 更新视图</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	update() &#123;</span><br><span class="line">		<span class="keyword">this</span>.getVal();</span><br><span class="line">		<span class="keyword">this</span>.node.nodeValue = <span class="keyword">this</span>.value;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 触发访问器中的get，从而向Dep中添加watcher，达到依赖收集的目的。</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	getVal() &#123;</span><br><span class="line">		<span class="keyword">this</span>.value = <span class="keyword">this</span>.vm[<span class="keyword">this</span>.name];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dep</span> </span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>() &#123;</span><br><span class="line">		<span class="keyword">this</span>.subs = [];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	depend(sub) &#123;</span><br><span class="line">		<span class="keyword">this</span>.subs.push(sub);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	notify() &#123;</span><br><span class="line">		<span class="keyword">this</span>.subs.forEach(<span class="function">(<span class="params">sub</span>) =&gt;</span> &#123;</span><br><span class="line">			sub.update();</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">Dep.target = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<p>这是修改之后的访问器属性配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">defineReactive(prop, value) &#123;</span><br><span class="line">	<span class="keyword">let</span> dep = <span class="keyword">new</span> Dep();</span><br><span class="line">	<span class="built_in">Object</span>.defineProperty(<span class="keyword">this</span>, prop, &#123;</span><br><span class="line">		<span class="keyword">get</span>: function() &#123;</span><br><span class="line">			<span class="keyword">if</span>(Dep.target) &#123;</span><br><span class="line">				dep.depend(Dep.target);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> value;</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="keyword">set</span>: function(newValue) &#123;</span><br><span class="line">			<span class="keyword">if</span>(value === newValue) <span class="keyword">return</span>;</span><br><span class="line">			value = newValue;</span><br><span class="line">			dep.notify();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，在配置data中某个属性的访问器时就已经实例化了Dep，不要忘了在compile的时候实例化Watcher。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">compile(node) &#123;</span><br><span class="line">	<span class="keyword">let</span> reg = <span class="regexp">/\&#123;\&#123;(.*)\&#125;\&#125;/</span>;</span><br><span class="line">	<span class="keyword">if</span>(node.nodeType === <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">let</span> attrs = node.attributes;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; attrs.length; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(attrs[i].nodeName == <span class="string">'v-model'</span>) &#123;</span><br><span class="line">				node.addEventListener(<span class="string">'input'</span>, (e) =&gt; &#123;</span><br><span class="line">					<span class="keyword">this</span>[attrs[i].nodeValue] = e.target.value;</span><br><span class="line">				&#125;)</span><br><span class="line">				node.value = <span class="keyword">this</span>[attrs[i].nodeValue];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span>(node.nodeType === <span class="number">3</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span>(reg.test(node.nodeValue)) &#123;</span><br><span class="line">			<span class="keyword">let</span> dataKey = <span class="built_in">RegExp</span>.$<span class="number">1</span>;</span><br><span class="line">			dataKey = dataKey.trim();</span><br><span class="line">			node.nodeValue = <span class="keyword">this</span>[dataKey];</span><br><span class="line">			<span class="keyword">new</span> Watcher(node, dataKey, <span class="keyword">this</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Vue.js中很便捷的一个特性用了不过一百行左右就实现了，这个简单的实现还无法处理稍微复杂一些的情况，但是其中的观察者模式的思想和对访问器属性的使用也是让我受益良多。</p>
+<p>刚刚开始学习Vue.js的源码，如果文中有错误还请多多指教。</p>
+<p>联系方式：<a href="mailto:ziixuanwu@gmail.com" target="_blank" rel="noopener">ziixuanwu@gmail.com</a></p>
+<p>源码：<a href="https://github.com/ZacheryWu/vue-learn-demo/blob/master/bind.html" target="_blank" rel="noopener">bind.html</a></p>
+<p>参考资料：</p>
+<ul>
+<li><a href="https://github.com/coderzzp/vue-come-true/tree/master/vue-come-true-First" target="_blank" rel="noopener">vue-come-true</a></li>
+<li><a href="https://github.com/DDFE/DDFE-blog/issues/7" target="_blank" rel="noopener">Vue 源码解析：深入响应式原理</a></li>
+<li><a href="https://gaodaqian.com/booklet-vue-core/0_Vue.js%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E5%85%A8%E5%B1%80%E6%A6%82%E8%A7%88.html#%E5%85%A8%E5%B1%80%E6%A6%82%E8%A7%88" target="_blank" rel="noopener">响应式系统的基本原理</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue-js学习/" rel="tag"># vue.js学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/08/使用回溯的方法解决子集、排列组合等类型的题/" rel="prev" title="使用回溯的方法解决子集、排列组合等类型的题">
+                使用回溯的方法解决子集、排列组合等类型的题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar1.jpg" alt="Zachery Wu">
+            
+              <p class="site-author-name" itemprop="name">Zachery Wu</p>
+              <p class="site-description motion-element" itemprop="description">吴子轩的个人博客</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分步实现"><span class="nav-number">2.</span> <span class="nav-text">分步实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解析html"><span class="nav-number">2.1.</span> <span class="nav-text">解析html</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#把input的value变化同步到data中"><span class="nav-number">2.2.</span> <span class="nav-text">把input的value变化同步到data中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步data中的数据改动同步到视图"><span class="nav-number">2.3.</span> <span class="nav-text">同步data中的数据改动同步到视图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zachery Wu</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">33k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">8 分钟</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.1"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
