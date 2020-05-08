@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="函数与对其状态即词法环境的引用共同构成闭包。也就是说，闭包可以让你从内部函数访问外部函数的作用域。在JavaScript中，函数在每次创建时生成闭包。 ----《MDN 闭包》 上面是MDN上关于闭包的定义，可以看出，按照这个说法，所有的JavaScript函数都是闭包，然而和我们平时面试时所说的闭包却并不一样。在我们平时说的闭包是指：即使创建函数的上下文已经销毁，但在函数中依然能够访问到创建函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="闭包">
+<meta property="og:url" content="http://yoursite.com/2020/03/16/闭包/index.html">
+<meta property="og:site_name" content="Zachery Wu">
+<meta property="og:description" content="函数与对其状态即词法环境的引用共同构成闭包。也就是说，闭包可以让你从内部函数访问外部函数的作用域。在JavaScript中，函数在每次创建时生成闭包。 ----《MDN 闭包》 上面是MDN上关于闭包的定义，可以看出，按照这个说法，所有的JavaScript函数都是闭包，然而和我们平时面试时所说的闭包却并不一样。在我们平时说的闭包是指：即使创建函数的上下文已经销毁，但在函数中依然能够访问到创建函数">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-16T15:20:55.878Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="闭包">
+<meta name="twitter:description" content="函数与对其状态即词法环境的引用共同构成闭包。也就是说，闭包可以让你从内部函数访问外部函数的作用域。在JavaScript中，函数在每次创建时生成闭包。 ----《MDN 闭包》 上面是MDN上关于闭包的定义，可以看出，按照这个说法，所有的JavaScript函数都是闭包，然而和我们平时面试时所说的闭包却并不一样。在我们平时说的闭包是指：即使创建函数的上下文已经销毁，但在函数中依然能够访问到创建函数">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/16/闭包/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>闭包 | Zachery Wu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zachery Wu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/16/闭包/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zachery Wu">
+      <meta itemprop="description" content="吴子轩的个人博客">
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zachery Wu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">闭包
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-16 20:35:31" itemprop="dateCreated datePublished" datetime="2020-03-16T20:35:31+08:00">2020-03-16</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">14k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">3 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <pre><code>函数与对其状态即词法环境的引用共同构成闭包。也就是说，闭包可以让你从内部函数访问外部函数的作用域。在JavaScript中，函数在每次创建时生成闭包。 ----《MDN 闭包》
+</code></pre><p>上面是MDN上关于闭包的定义，可以看出，按照这个说法，所有的JavaScript函数都是闭包，然而和我们平时面试时所说的闭包却并不一样。在我们平时说的闭包是指：<code>即使创建函数的上下文已经销毁，但在函数中依然能够访问到创建函数时的上下文</code>。所以其实我们平时说的闭包是理论上闭包的一种特殊情况。</p>
+<h2 id="原始的面试题"><a href="#原始的面试题" class="headerlink" title="原始的面试题"></a>原始的面试题</h2><p>下面就总结一下平时所说的，实践中的闭包。之前已经总结过作用域的相关知识，而要理解闭包只需要这些知识就够了，并不需要引入新的知识。先从一道经典的题目来分析一下闭包：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> data = [];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">	data[i] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">data[<span class="number">0</span>]();<span class="comment">//3</span></span><br><span class="line">data[<span class="number">1</span>]();<span class="comment">//3</span></span><br><span class="line">data[<span class="number">2</span>]();<span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+<p>代码执行的步骤为：</p>
+<ol>
+<li><p>创建全局上下文globalContext，并压入ECS中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">globalContext = &#123;</span><br><span class="line">    VO: &#123;</span><br><span class="line">        data: <span class="literal">undefined</span>,</span><br><span class="line">        i: <span class="literal">undefined</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    [scope]: [globalContext.VO],</span><br><span class="line">    <span class="keyword">this</span>: <span class="built_in">window</span></span><br><span class="line">&#125;</span><br><span class="line">ECS: [globalContext]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开始执行全局环境下的代码，VO中的data和i相继被赋值，在执行<code>data[0]()</code>之前，VO为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">globalContext.VO = &#123;</span><br><span class="line">    data: <span class="built_in">Array</span>,</span><br><span class="line">    i: <span class="number">3</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在执行<code>data[0]()</code>之前创建它的执行上下文：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data0Context = &#123;</span><br><span class="line">    AO: &#123;</span><br><span class="line">        <span class="built_in">arguments</span>: &#123;<span class="attr">length</span>: <span class="number">0</span>&#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    [scope]:[AO, globalContext.VO],</span><br><span class="line">    <span class="keyword">this</span>: <span class="literal">undefined</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开始执行<code>data[0]()</code> ，在执行时顺着作用域链查找变量i，在AO中没有找到，所以继续向上找，在globalContext.VO中找到了i，这时的i值为3 。所以console.log打印出的为3 。</p>
+</li>
+<li><p>后面的<code>data[1]()</code> 和<code>data[2]()</code> 与之前相同，在此不再赘述。这样一套分析下来，为什么输出是3，就很明确了。</p>
+</li>
+</ol>
+<h2 id="此类问题的解决"><a href="#此类问题的解决" class="headerlink" title="此类问题的解决"></a>此类问题的解决</h2><p>为了解决拿不到想要的值得问题，我们采用了这种方式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">    data[i] = (<span class="function"><span class="keyword">function</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(i)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)(i)</span><br><span class="line">&#125;</span><br><span class="line">data[<span class="number">0</span>]();<span class="comment">//0</span></span><br><span class="line">data[<span class="number">1</span>]();<span class="comment">//1</span></span><br><span class="line">data[<span class="number">2</span>]();<span class="comment">//2</span></span><br></pre></td></tr></table></figure>
+<p>其实只在外面加了一层匿名函数，那么这层匿名函数起到了什么效果呢。再来分析一下：</p>
+<ol>
+<li><p>创建全局上下文globalContext，并压入ECS中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">globalContext = &#123;</span><br><span class="line">    VO: &#123;</span><br><span class="line">        data: <span class="literal">undefined</span>,</span><br><span class="line">        i: <span class="literal">undefined</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    [scope]: [globalContext.VO],</span><br><span class="line">    <span class="keyword">this</span>: <span class="built_in">window</span></span><br><span class="line">&#125;</span><br><span class="line">ECS: [globalContext]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开始执行全局环境下的代码，VO中的data和i相继被赋值，在执行<code>data[0]()</code>之前，VO为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">globalContext.VO = &#123;</span><br><span class="line">    data: <span class="built_in">Array</span>,</span><br><span class="line">    i: <span class="number">3</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在执行<code>data[0]()</code>之前创建它的执行上下文：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data0Context = &#123;</span><br><span class="line">    AO: &#123;</span><br><span class="line">        <span class="built_in">arguments</span>: &#123;<span class="attr">length</span>: <span class="number">0</span>&#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    [scope]:[AO, 匿名函数.VO, globalContext.VO],</span><br><span class="line">    <span class="keyword">this</span>: <span class="literal">undefined</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，就是在这里出现了不同，data[0]的作用域中多了一级匿名函数。</p>
+</li>
+<li><p>开始执行<code>data[0]()</code> ，在执行时顺着作用域链查找变量i，在AO中没有找到，所以继续向上找，在匿名函数.VO查找，这时匿名函数的VO为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">匿名函数.VO = &#123;</span><br><span class="line">    <span class="built_in">arguments</span>: &#123;</span><br><span class="line">		i: <span class="number">0</span>,</span><br><span class="line">        length: <span class="number">1</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以在匿名函数.VO中找到了i，此时的i为0 ，所以<code>data[0]()</code>输出为0，即使外面globalContext.VO中的i依旧为3。</p>
+</li>
+<li><p>另外两个和<code>data[0]()</code>类似，在此不再赘述。</p>
+</li>
+</ol>
+<p>所以所谓的通过闭包来解决此类问题就是在其中再加一层函数作用域用来缓存当时的变量i。</p>
+<h2 id="使用let解决此问题"><a href="#使用let解决此问题" class="headerlink" title="使用let解决此问题"></a>使用let解决此问题</h2><p>使用let关键字可以比闭包更加优雅的解决这类问题：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">    data[i] = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">data[<span class="number">0</span>]();<span class="comment">//0</span></span><br><span class="line">data[<span class="number">1</span>]();<span class="comment">//1</span></span><br><span class="line">data[<span class="number">2</span>]();<span class="comment">//2</span></span><br></pre></td></tr></table></figure>
+<p>上面代码在经过babel转义之后为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> _loop = <span class="function"><span class="keyword">function</span> <span class="title">_loop</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">data[i] = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(i);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">_loop(i);</span><br><span class="line">&#125;</span><br><span class="line">data[<span class="number">0</span>]();<span class="comment">//0</span></span><br><span class="line">data[<span class="number">1</span>]();<span class="comment">//1</span></span><br><span class="line">data[<span class="number">2</span>]();<span class="comment">//2</span></span><br></pre></td></tr></table></figure>
+<p>其实和使用闭包的方式是差不多的，都是在加了一个函数作用域用来存储变量i的值，只是这个作用域的位置有所不同。至于let具体在js中是怎么实现的，在此不详细分析(本来以为是语法糖，然而找了一圈，并没有let是语法糖的说法)。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>其实平时我们说的闭包就是JavaScript的作用域在使用时产生的一种特殊现象，如果理解了底层JavaScript的作用域链，闭包其实并不算是问题😀。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://github.com/mqyqingfeng/Blog/issues/9" target="_blank" rel="noopener">JavaScript深入之闭包</a><br><a href="https://github.com/mqyqingfeng/Blog/issues/8" target="_blank" rel="noopener">JavaScript深入之执行上下文</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures" target="_blank" rel="noopener">闭包 MDN</a><br><a href="https://en.wikipedia.org/wiki/Closure_(computer_programming" target="_blank" rel="noopener">闭包 Wikipedia</a>)<br>闭包 Javascript高级程序设计</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/12/this的指向/" rel="next" title="this的指向">
+                <i class="fa fa-chevron-left"></i> this的指向
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/17/call、aplly、bind模拟实现/" rel="prev" title="call、aplly、bind模拟实现">
+                call、aplly、bind模拟实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar1.jpg" alt="Zachery Wu">
+            
+              <p class="site-author-name" itemprop="name">Zachery Wu</p>
+              <p class="site-description motion-element" itemprop="description">吴子轩的个人博客</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原始的面试题"><span class="nav-number">1.</span> <span class="nav-text">原始的面试题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#此类问题的解决"><span class="nav-number">2.</span> <span class="nav-text">此类问题的解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用let解决此问题"><span class="nav-number">3.</span> <span class="nav-text">使用let解决此问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">4.1.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zachery Wu</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">62k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">16 分钟</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.1"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="JavaScript中的继承有多种实现方式，各有优缺点 原型链1234567891011121314151617function Cat() &amp;#123;	this.sayHi = function() &amp;#123;		console.log(&apos;miao~&apos;);	&amp;#125;,	this.habit = [&apos;sleep&apos;, &apos;mouse&apos;]&amp;#125;function YellowCat() &amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="继承">
+<meta property="og:url" content="http://yoursite.com/2020/03/27/继承/index.html">
+<meta property="og:site_name" content="Zachery Wu">
+<meta property="og:description" content="JavaScript中的继承有多种实现方式，各有优缺点 原型链1234567891011121314151617function Cat() &amp;#123;	this.sayHi = function() &amp;#123;		console.log(&apos;miao~&apos;);	&amp;#125;,	this.habit = [&apos;sleep&apos;, &apos;mouse&apos;]&amp;#125;function YellowCat() &amp;">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-03-27T10:06:52.686Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="继承">
+<meta name="twitter:description" content="JavaScript中的继承有多种实现方式，各有优缺点 原型链1234567891011121314151617function Cat() &amp;#123;	this.sayHi = function() &amp;#123;		console.log(&apos;miao~&apos;);	&amp;#125;,	this.habit = [&apos;sleep&apos;, &apos;mouse&apos;]&amp;#125;function YellowCat() &amp;">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/27/继承/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>继承 | Zachery Wu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zachery Wu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/27/继承/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zachery Wu">
+      <meta itemprop="description" content="吴子轩的个人博客">
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zachery Wu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">继承
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-27 11:11:36" itemprop="dateCreated datePublished" datetime="2020-03-27T11:11:36+08:00">2020-03-27</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">17k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">4 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> JavaScript中的继承有多种实现方式，各有优缺点</p>
+<h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Cat</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'miao~'</span>);</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="keyword">this</span>.habit = [<span class="string">'sleep'</span>, <span class="string">'mouse'</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">YellowCat</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.color = <span class="string">'yellow'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> catProto = <span class="keyword">new</span> Cat();</span><br><span class="line">YellowCat.prototype = catProto;</span><br><span class="line"><span class="keyword">let</span> xiaohua = <span class="keyword">new</span> YellowCat();</span><br><span class="line"><span class="keyword">let</span> anotherCat = <span class="keyword">new</span> YellowCat();</span><br><span class="line">xiaohua.habit.push(<span class="string">'milk'</span>); <span class="comment">//["sleep", "mouse", "milk"]</span></span><br><span class="line"><span class="built_in">console</span>.log(anotherCat.habit); <span class="comment">//</span></span><br><span class="line"><span class="built_in">console</span>.log(xiaohua.color) <span class="comment">//yellow</span></span><br><span class="line">xiaohua.sayHi(); <span class="comment">//miao~</span></span><br></pre></td></tr></table></figure>
+<p>上面的代码通过原型链的方式实现了继承，然而，这种通过修改构造函数的prototype属性，来实现的原型链还存在一些问题：</p>
+<ol>
+<li>原型上的属性会被共享，这也是在构造函数中定义属性而不是在原型对象中定义属性的原因。就拿上面的代码来说，xiaohua在habit中添加了milk，却也改变了anotherCat的habit属性。所以一般我们只在原型上定义方法，而不定义属性。</li>
+<li>在创建子类型的实例时，不能向超类型的构造函数中传递参数。具体来说，就是在创建YellowCat的实例时无法向Cat传参，如果要修改原型，那么将会导致所有的实例能够获取到的属性都被修改。</li>
+</ol>
+<h3 id="借用构造函数"><a href="#借用构造函数" class="headerlink" title="借用构造函数"></a>借用构造函数</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Cat</span>(<span class="params">color</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'miao~'</span>);</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="keyword">this</span>.color = color</span><br><span class="line">	<span class="keyword">this</span>.habit = [<span class="string">'sleep'</span>, <span class="string">'mouse'</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">YellowCat</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	Cat.call(<span class="keyword">this</span>, <span class="string">'color'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> xiaohua = <span class="keyword">new</span> YellowCat();</span><br><span class="line"><span class="keyword">let</span> anotherCat = <span class="keyword">new</span> YellowCat();</span><br><span class="line">xiaohua.habit.push(<span class="string">'milk'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(anotherCat.habit)<span class="comment">//["sleep", "mouse"]</span></span><br></pre></td></tr></table></figure>
+<p>使用构造函数解决了原型链方法的两个问题，可以看到habit属性在两个属性中是独立，互不影响，不被共享，而且可以向超类实例中传递参数。</p>
+<p>但是这种方式也有一些缺点，那就是无法对方法复用，也就是说每创建一个实例都会重新构建一个属性方法就比如上面的sayHi。而在原型链实现的继承中是没有这个问题的，所以我们可以把这两种方式结合起来，就是下面的组合继承。</p>
+<h3 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Cat</span>(<span class="params">color</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.color = color</span><br><span class="line">	<span class="keyword">this</span>.habit = [<span class="string">'sleep'</span>, <span class="string">'mouse'</span>]</span><br><span class="line">&#125;</span><br><span class="line">Cat.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'miao~'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">YellowCat</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	Cat.call(<span class="keyword">this</span>, <span class="string">'color'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">YellowCat.prototype = <span class="keyword">new</span> Cat();</span><br><span class="line">YellowCat.prototype.eat = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'be fat'</span>)</span><br><span class="line">&#125;</span><br><span class="line">YellowCat.prototype.constructor = YellowCat;</span><br><span class="line"><span class="keyword">let</span> xiaohua = <span class="keyword">new</span> YellowCat();</span><br><span class="line"><span class="keyword">let</span> anotherCat = <span class="keyword">new</span> YellowCat();</span><br><span class="line">xiaohua.habit.push(<span class="string">'milk'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(anotherCat.habit)</span><br><span class="line"><span class="built_in">console</span>.log(xiaohua.sayHi === anotherCat.sayHi)<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>优点：解决了构造函数继承和原型链继承的问题，成为JavaScript中最常用的继承方式</p>
+<p>缺点：会调用两次超类的构造方法，并且超类实例中的属性肯定会被重写。</p>
+<h3 id="原型式继承"><a href="#原型式继承" class="headerlink" title="原型式继承"></a>原型式继承</h3><p>原型式继承的核心是这个方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object</span>(<span class="params">o</span>) </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">	F.prototype = o;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过创建一个内部的函数F，并且设置他的原型为传进来的参数o，返回一个以F为构造函数生成的对象，实现了对对象o的复制。其实和原型链式继承很像，只不过这里继承的是一个对象，而不是一个构造函数的原型。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">	name: <span class="string">'Rajsh'</span>,</span><br><span class="line">	friends: [<span class="string">'Sheldon'</span>, <span class="string">'Leonard'</span>, <span class="string">'Howard'</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> anotherPerson = object(person);</span><br><span class="line">anotherPerson.name = <span class="string">'Bernadette'</span>;</span><br><span class="line">anotherPerson.friends.push(<span class="string">'Penny'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> yetAnoterhPerson = object(person);</span><br><span class="line">yetAnoterhPerson.name = <span class="string">'Amy'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(yetAnoterhPerson.friends); <span class="comment">//["Sheldon", "Leonard", "Howard", "Penny"]</span></span><br><span class="line"><span class="built_in">console</span>.log(anotherPerson.name)<span class="comment">//Bernadette</span></span><br></pre></td></tr></table></figure>
+<p>这种方式创建的对象也是共享person上的属性的，但是也各自拥有自己的name属性。其实相当于创建了person的两个副本。</p>
+<h3 id="寄生式继承"><a href="#寄生式继承" class="headerlink" title="寄生式继承"></a>寄生式继承</h3><p>寄生式继承又把原型式继承封装了一下，类似于一个工厂</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createObject</span>(<span class="params">o</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> clone = object(o);</span><br><span class="line">	clone.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">"hello, I'm "</span>+ <span class="keyword">this</span>.name)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> clone;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在object方法的基础上，又给对象添加了公共方法，可以这样使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">	name: <span class="string">'Rajsh'</span>,</span><br><span class="line">	friends: [<span class="string">'Sheldon'</span>, <span class="string">'Leonard'</span>, <span class="string">'Howard'</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> anotherPerson = createObject(person);</span><br><span class="line">anotherPerson.name = <span class="string">'Bernadette'</span>;</span><br><span class="line">anotherPerson.sayHi(); <span class="comment">//hello, I'm Bernadette</span></span><br></pre></td></tr></table></figure>
+<p>这样生成的对象不仅继承了person上的属性，还拥有自己的方法sayHi。</p>
+<h3 id="组合寄生式继承"><a href="#组合寄生式继承" class="headerlink" title="组合寄生式继承"></a>组合寄生式继承</h3><p>终于到这里了，利用前面了解到的寄生式继承，可以解决组合继承的那个缺点，首先创建一个方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inheritPrototype</span>(<span class="params">subType, superType</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> prototype = superType.prototype;</span><br><span class="line">	prototype.constructor = subType;</span><br><span class="line">	subType.prototype = prototype;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用这个方法可以直接让子类和父类成为继承关系，却不需要创建实例，这样就能够既享受到父类原型上的方法又不需要调用两次父类的构造函数和重写父类属性了。下面使用以下这个方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inheritPrototype</span>(<span class="params">subType, superType</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> prototype = superType.prototype;</span><br><span class="line">	prototype.constructor = subType;</span><br><span class="line">	subType.prototype = prototype;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Cat</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">	<span class="keyword">this</span>.habit = [<span class="string">'sleep'</span>, <span class="string">'mouse'</span>];</span><br><span class="line">&#125;</span><br><span class="line">Cat.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'miao~'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">YellowCat</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">	<span class="keyword">this</span>.color = <span class="string">'Yellow'</span>;</span><br><span class="line">&#125;</span><br><span class="line">inheritPrototype(YellowCat, Cat);</span><br><span class="line"><span class="keyword">let</span> xiaohua = <span class="keyword">new</span> YellowCat(<span class="string">'xiaohua'</span>);</span><br><span class="line">xiaohua.sayHi();</span><br></pre></td></tr></table></figure>
+<p>这种继承方式通常被认为是最理想的继承范式。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/17/call、aplly、bind模拟实现/" rel="next" title="call、aplly、bind模拟实现">
+                <i class="fa fa-chevron-left"></i> call、aplly、bind模拟实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/31/js的事件循环/" rel="prev" title="js的事件循环">
+                js的事件循环 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar1.jpg" alt="Zachery Wu">
+            
+              <p class="site-author-name" itemprop="name">Zachery Wu</p>
+              <p class="site-description motion-element" itemprop="description">吴子轩的个人博客</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#原型链"><span class="nav-number">1.</span> <span class="nav-text">原型链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#借用构造函数"><span class="nav-number">2.</span> <span class="nav-text">借用构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组合继承"><span class="nav-number">3.</span> <span class="nav-text">组合继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原型式继承"><span class="nav-number">4.</span> <span class="nav-text">原型式继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄生式继承"><span class="nav-number">5.</span> <span class="nav-text">寄生式继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组合寄生式继承"><span class="nav-number">6.</span> <span class="nav-text">组合寄生式继承</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zachery Wu</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">62k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">16 分钟</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.1"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

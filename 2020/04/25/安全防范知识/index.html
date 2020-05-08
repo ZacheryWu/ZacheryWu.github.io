@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="安全是很复杂的一个领域，这里只选一些前端比较常见的安全问题进行总结。 XSSXSS介绍XSS是指跨站脚本攻击，是cross site scripting的缩写，攻击者通过注入，在页面上执行恶意的脚本，可以获取到用户的cookie、sessionID等用户敏感信息。为了和CSS区分，所以缩写为XSS。 XSS的本质是：恶意代码未经过滤，与网站的正常代码混合在一起，浏览器无法分辨哪些脚本是可信的，导致">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安全防范知识">
+<meta property="og:url" content="http://yoursite.com/2020/04/25/安全防范知识/index.html">
+<meta property="og:site_name" content="Zachery Wu">
+<meta property="og:description" content="安全是很复杂的一个领域，这里只选一些前端比较常见的安全问题进行总结。 XSSXSS介绍XSS是指跨站脚本攻击，是cross site scripting的缩写，攻击者通过注入，在页面上执行恶意的脚本，可以获取到用户的cookie、sessionID等用户敏感信息。为了和CSS区分，所以缩写为XSS。 XSS的本质是：恶意代码未经过滤，与网站的正常代码混合在一起，浏览器无法分辨哪些脚本是可信的，导致">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-04-25T06:44:21.238Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="安全防范知识">
+<meta name="twitter:description" content="安全是很复杂的一个领域，这里只选一些前端比较常见的安全问题进行总结。 XSSXSS介绍XSS是指跨站脚本攻击，是cross site scripting的缩写，攻击者通过注入，在页面上执行恶意的脚本，可以获取到用户的cookie、sessionID等用户敏感信息。为了和CSS区分，所以缩写为XSS。 XSS的本质是：恶意代码未经过滤，与网站的正常代码混合在一起，浏览器无法分辨哪些脚本是可信的，导致">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/25/安全防范知识/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>安全防范知识 | Zachery Wu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zachery Wu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/25/安全防范知识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zachery Wu">
+      <meta itemprop="description" content="吴子轩的个人博客">
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zachery Wu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">安全防范知识
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-25 10:21:36" itemprop="dateCreated datePublished" datetime="2020-04-25T10:21:36+08:00">2020-04-25</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">5.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>安全是很复杂的一个领域，这里只选一些前端比较常见的安全问题进行总结。</p>
+<h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><h3 id="XSS介绍"><a href="#XSS介绍" class="headerlink" title="XSS介绍"></a>XSS介绍</h3><p>XSS是指跨站脚本攻击，是cross site scripting的缩写，攻击者通过注入，在页面上执行恶意的脚本，可以获取到用户的cookie、sessionID等用户敏感信息。为了和CSS区分，所以缩写为XSS。</p>
+<p>XSS的本质是：恶意代码未经过滤，与网站的正常代码混合在一起，浏览器无法分辨哪些脚本是可信的，导致恶意代码被执行。而由于直接在客户端执行，恶意代码能够轻易地获取到用户的信息，或者利用这些信息冒充用户发起攻击。一般情况下，由于输入的限制，注入的恶意脚本较短，但是可以通过引入外部脚本，来完成攻击。</p>
+<p>攻击者不仅仅可以通过UGC（User Generated Content）来完成攻击，甚至可以利用URL来进行攻击。因此，在处理输入时，以下内容都是不可信的，需要做处理：</p>
+<ul>
+<li>来自用户的UGC信息</li>
+<li>来自第三方的链接</li>
+<li>URL参数</li>
+<li>POST参数</li>
+<li>Referer(可能来自不可信的来源)</li>
+<li>Cookie(可能来自其他的子域注入)</li>
+</ul>
+<h3 id="XSS的防范"><a href="#XSS的防范" class="headerlink" title="XSS的防范"></a>XSS的防范</h3><p>XSS攻击有两大要素：1. 攻击者提交恶意代码 2. 浏览器执行恶意代码</p>
+<p>针对这两大要素我们进行防范：</p>
+<ol>
+<li><p>对于攻击者提交恶意代码，我们尝试通过过滤用户输入来解决，然而攻击者也可以通过直接伪造请求来绕过前端的过滤。如果在后端数据写入之前进行过滤，攻击者就无法绕过，然而对于不确定类型的过滤可能会影响到一些正常数据，比如一些富文本的场景，用户确实需要输入<code>&lt;script/&gt;</code> ，所以通过阻止攻击者提交恶意代码是不可靠的。当然，在一些特定场景，比如确定用户输入的是电话号码、邮件等等时可以进行过滤。</p>
+</li>
+<li><p>防止浏览器执行恶意代码，分为两部分：</p>
+<ol>
+<li>防止HTML中出现注入</li>
+<li>防止JavaScript执行时，出现恶意代码</li>
+</ol>
+<p>因为很多XSS注入都是在从服务端取出数据后拼接成html后，执行了恶意代码，所以为了预防这类漏洞，我们可以</p>
+<ol>
+<li>纯前端渲染，将数据和代码分离。在纯前端渲染中，我们会明确的告诉浏览器设置的内容是文本还是属性，浏览器不会被欺骗，也就不会出现注入了。然而，在很多内部、管理系统中，采用纯前端渲染是非常合适的。但对于性能要求高，或有 SEO 需求的页面，我们仍然要面对拼接 HTML 的问题。</li>
+<li>对HTML充分转义。如果必须要拼接HTML，那么就要采用转义的方式，HTML的编码是十分复杂的，想要自己完成所有内容的转义很困难，所以一般采用成熟的转义库。</li>
+</ol>
+<p>然而还有一些XSS注入并不是HTML拼接造成的，攻击者直接在前端进行攻击。这是因为开发者不够严谨，使用了innerHTML 、ducoment.write()等方法，把不可信的数据作为了HTML插入到页面中。所以我们在开发中要尽可能的避免使用这些方法，如果需要用的这些，一定要避免在字符串中出现拼接不可信数据。常见的不可信方式有：</p>
+<ol>
+<li>innerHTML、document.write()</li>
+<li>Vue/React中，v-html/dangerousSetInnerHTML等等</li>
+<li>DOM中的内联监听事件，如location、onclick、onerror等等，还有a标签的href属性，JavaScript中的eval、settimeout等都有执行JavaScript代码的功能。</li>
+</ol>
+</li>
+</ol>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>整体的XSS防范是非常复杂繁琐的，不仅仅需要对数据进行转义，还需要确保没有多余和错误的转义，避免正常的输入变成乱码。</p>
+<p>我们一般可以通过以下方式，减少漏洞：</p>
+<ul>
+<li>利用模板引擎，开启模板引擎自带的转义功能</li>
+<li>避免内联事件，如onLoad=”onload({data})” ，尽量在js中采用addEventListener的方式添加事件</li>
+<li>避免拼接HTML</li>
+<li>对于DOM插入的操作要谨慎</li>
+<li>主动检测和发现，使用XSS攻击字符串和扫描工具进行检测，寻找潜在的漏洞</li>
+</ul>
+<h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><h3 id="CSRF介绍"><a href="#CSRF介绍" class="headerlink" title="CSRF介绍"></a>CSRF介绍</h3><p>跨站请求伪造(Cross-Site Requeset Forgery)，在cookie中通常保存用户的登陆信息，而服务端通常通过这些信息进行身份验证，CSRF就是通过冒用被攻击者的身份，完成自己需要的攻击操作。</p>
+<p>一次完整的CSRF攻击流程如下：</p>
+<ol>
+<li>小明登陆了a.com，并且保存了登录信息在cookie中</li>
+<li>小明访问了b.com</li>
+<li>b.com向a.com发起请求，a.com/doSth=xxx，浏览器会携带上a.com的cookie</li>
+<li>a.com的服务器收到请求后验证cookie，以小明的名义执行了doSth操作</li>
+<li>攻击完成，攻击者以小明的名义完成了doSth操作。</li>
+</ol>
+<p>由于CSRF通常在第三方网站发起，被攻击的网站无法组织，所以只能通过增强自己网站对CSRF的防护能力来防范。</p>
+<p>CSRF有这些特点：</p>
+<ul>
+<li>发生在第三方域名</li>
+<li>攻击者无法获取到用户的cookie信息，只是冒用</li>
+</ul>
+<h3 id="CSRF防护"><a href="#CSRF防护" class="headerlink" title="CSRF防护"></a>CSRF防护</h3><p>针对CSRF的特点，我们有以下防护策略：</p>
+<ul>
+<li>阻止不明外域的访问<ul>
+<li>同源策略</li>
+<li>samesite cookie</li>
+</ul>
+</li>
+<li>提交时要求附加本域才能获取的信息<ul>
+<li>CSRF token</li>
+<li>双重cookie验证</li>
+</ul>
+</li>
+</ul>
+<p>下面详细说明这些防护策略:</p>
+<ol>
+<li><p>同源策略</p>
+<p>禁止外域发起的请求，要想判断是否是外域发起的请求可以通过请求头中的referer或origin来判断。但是有些正常的情况也不会携带referer，这就导致攻击者可以通过不携带referer完成攻击。所以这种方式相对简单，但还是有被攻击的漏洞。</p>
+</li>
+<li><p>CSRF Token</p>
+<ol>
+<li>在用户打开页面的时候，服务器给这个用户生成一个token，这个token经过加密算法加密，但是token不能再放在cookie中，否则还会被攻击者利用，因此只能在后续每次加载页面的时候，给所有的a和form添加token参数。</li>
+<li>在页面中提交请求时携带这个token，因为不是通过cookie携带的，所以攻击者无法获取到token</li>
+<li>服务器验证Token是否正确，通过验证攻击者无法伪造的token就可以验证请求是否是安全的了。</li>
+</ol>
+<p>此方法比较复杂，但是更加有效。</p>
+</li>
+<li><p>双重cookie验证</p>
+<p>使用token的方式验证比较复杂繁琐，双重cookie相比就简单很多。利用攻击者无法获取到用户cookie的特点，我们可以要求ajax请求或者表单请求中携带一个cookie中的值，然后后端验证请求中的值是否和cookie中的值一致。</p>
+<p>但是这种方式也有缺点，那就是在子域名之间也是拿不到cookie的，比如<a href="http://www.a.com的域名和a.com的域名无法共享，也就无法完成双重cookie验证。" target="_blank" rel="noopener">www.a.com的域名和a.com的域名无法共享，也就无法完成双重cookie验证。</a></p>
+</li>
+<li><p>samesite cookie属性</p>
+<p>Google起草的一份草案来改进HTTP协议，为set-cookie相应头添加Samesite属性，用这个属性来标明这个网站是个同站cookie，同站cookie只能被本站使用，无法作为第三方cookie。目前还不太成熟，具体使用可以参考<a href="https://www.ruanyifeng.com/blog/2019/09/cookie-samesite.html" target="_blank" rel="noopener">这篇文章</a></p>
+</li>
+</ol>
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>为了更好的防护CSRF攻击，最佳的方式是结合上面介绍的防御措施综合考虑，并且要结合自己的Web应用的自身情况做出决定。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>前端的安全是开发中非常重要的一部分，尤其是在开发时小心产生可能被XSS注入的漏洞，现在的开发过程中，有很多的安全问题都被框架解决了，但是也会有一些框架不能覆盖到或者暴露出来的还需要注意。对于平时使用的框架也要多去了解是怎么解决安全问题的，这样在以后遇到才不会手忙脚乱。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://tech.meituan.com/2018/09/27/fe-security.html" target="_blank" rel="noopener">前端安全系列（一）：如何防止XSS攻击？</a></p>
+<p><a href="https://tech.meituan.com/2018/10/11/fe-security-csrf.html" target="_blank" rel="noopener">前端安全系列（二）：如何防止CSRF攻击？</a></p>
+<p><a href="https://www.ruanyifeng.com/blog/2019/09/cookie-samesite.html" target="_blank" rel="noopener">Cookie 的 SameSite 属性</a></p>
+<p><a href>前端面试之道-安全防范知识点</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/18/浏览器的工作原理/" rel="next" title="浏览器的工作原理">
+                <i class="fa fa-chevron-left"></i> 浏览器的工作原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar1.jpg" alt="Zachery Wu">
+            
+              <p class="site-author-name" itemprop="name">Zachery Wu</p>
+              <p class="site-description motion-element" itemprop="description">吴子轩的个人博客</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#XSS"><span class="nav-number">1.</span> <span class="nav-text">XSS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS介绍"><span class="nav-number">1.1.</span> <span class="nav-text">XSS介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS的防范"><span class="nav-number">1.2.</span> <span class="nav-text">XSS的防范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSRF"><span class="nav-number">2.</span> <span class="nav-text">CSRF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CSRF介绍"><span class="nav-number">2.1.</span> <span class="nav-text">CSRF介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSRF防护"><span class="nav-number">2.2.</span> <span class="nav-text">CSRF防护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结-1"><span class="nav-number">2.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zachery Wu</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">62k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">16 分钟</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.1"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -96,24 +96,24 @@
 
 
 
-  <meta name="description" content="JavaScript是一门词法作用域的语言，为了实现动态的能力，JavaScript引入了this。词法作用域又叫静态作用域，与之相对的是动态作用域，而动态作用域则是指根据函数调用的位置来确定变量作用范围这种规则。 而JavaScript实现动态作用域的方法就是通过this，this在函数体内部，指向函数当前的运行环境。 因为this会有多种出现方式，我们归纳为四种，优先级从高到低分别为：  构造">
+  <meta name="description" content="JavaScript具有自动垃圾收集机制，也就是说，执行环境会自动管理代码执行过程中使用的内存。 这种自动管理内存的方式其实很简单，就是每隔一段时间就找出没有再使用的内存，释放掉。而找出没有被使用的内存的方式一般有以下两种： 引用计数引用计数是指跟踪记录每个值被使用的次数。当声明了一个变量，并且将一个引用类型的值赋给这个变量，那么这个值的引用次数就记为1。如果接下来又把这个值赋给了另一个变量，那">
 <meta property="og:type" content="article">
-<meta property="og:title" content="this的指向">
-<meta property="og:url" content="http://yoursite.com/2020/03/12/this的指向/index.html">
+<meta property="og:title" content="js的垃圾收集">
+<meta property="og:url" content="http://yoursite.com/2020/04/01/js的垃圾收集/index.html">
 <meta property="og:site_name" content="Zachery Wu">
-<meta property="og:description" content="JavaScript是一门词法作用域的语言，为了实现动态的能力，JavaScript引入了this。词法作用域又叫静态作用域，与之相对的是动态作用域，而动态作用域则是指根据函数调用的位置来确定变量作用范围这种规则。 而JavaScript实现动态作用域的方法就是通过this，this在函数体内部，指向函数当前的运行环境。 因为this会有多种出现方式，我们归纳为四种，优先级从高到低分别为：  构造">
+<meta property="og:description" content="JavaScript具有自动垃圾收集机制，也就是说，执行环境会自动管理代码执行过程中使用的内存。 这种自动管理内存的方式其实很简单，就是每隔一段时间就找出没有再使用的内存，释放掉。而找出没有被使用的内存的方式一般有以下两种： 引用计数引用计数是指跟踪记录每个值被使用的次数。当声明了一个变量，并且将一个引用类型的值赋给这个变量，那么这个值的引用次数就记为1。如果接下来又把这个值赋给了另一个变量，那">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-03-12T13:41:37.815Z">
+<meta property="og:updated_time" content="2020-04-01T14:22:24.858Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="this的指向">
-<meta name="twitter:description" content="JavaScript是一门词法作用域的语言，为了实现动态的能力，JavaScript引入了this。词法作用域又叫静态作用域，与之相对的是动态作用域，而动态作用域则是指根据函数调用的位置来确定变量作用范围这种规则。 而JavaScript实现动态作用域的方法就是通过this，this在函数体内部，指向函数当前的运行环境。 因为this会有多种出现方式，我们归纳为四种，优先级从高到低分别为：  构造">
+<meta name="twitter:title" content="js的垃圾收集">
+<meta name="twitter:description" content="JavaScript具有自动垃圾收集机制，也就是说，执行环境会自动管理代码执行过程中使用的内存。 这种自动管理内存的方式其实很简单，就是每隔一段时间就找出没有再使用的内存，释放掉。而找出没有被使用的内存的方式一般有以下两种： 引用计数引用计数是指跟踪记录每个值被使用的次数。当声明了一个变量，并且将一个引用类型的值赋给这个变量，那么这个值的引用次数就记为1。如果接下来又把这个值赋给了另一个变量，那">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/12/this的指向/">
+  <link rel="canonical" href="http://yoursite.com/2020/04/01/js的垃圾收集/">
 
 
 
@@ -123,7 +123,7 @@
   };
 </script>
 
-  <title>this的指向 | Zachery Wu</title>
+  <title>js的垃圾收集 | Zachery Wu</title>
   
 
 
@@ -288,7 +288,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/this的指向/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/01/js的垃圾收集/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zachery Wu">
@@ -305,7 +305,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">this的指向
+          <h1 class="post-title" itemprop="name headline">js的垃圾收集
 
               
             
@@ -331,7 +331,7 @@
                 
               
 
-              <time title="创建时间：2020-03-12 21:01:30" itemprop="dateCreated datePublished" datetime="2020-03-12T21:01:30+08:00">2020-03-12</time>
+              <time title="创建时间：2020-04-01 21:24:21" itemprop="dateCreated datePublished" datetime="2020-04-01T21:24:21+08:00">2020-04-01</time>
             
 
             
@@ -367,7 +367,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.4k</span>
+                <span title="本文字数">2.3k</span>
               
 
               
@@ -401,23 +401,20 @@
       
 
       
-        <p>JavaScript是一门词法作用域的语言，为了实现动态的能力，JavaScript引入了this。词法作用域又叫静态作用域，与之相对的是动态作用域，而动态作用域则是指根据函数调用的位置来确定变量作用范围这种规则。</p>
-<p>而JavaScript实现动态作用域的方法就是通过this，this在函数体内部，指向函数当前的运行环境。</p>
-<p>因为this会有多种出现方式，我们归纳为四种，优先级从高到低分别为：</p>
-<ol>
-<li>构造绑定，指的是函数作为构造函数，通过 new foo()这种方式创建的对象，在这种情况下，foo函数中的所有this都指向创建出的新的对象。</li>
-<li>显式绑定，指的是通过call、apply、bind这种很显然的方法来对函数foo进行this的绑定，此时，foo中的所有this指向都会指向call、apply、bind传入的第一个参数中的对象。</li>
-<li>隐式绑定，指的是通过obj.foo()这种隐式的方法来调用函数时，foo中的this都指向obj这个对象。</li>
-<li>默认绑定，在默认情况下，this指向全局对象。其实这种情况可以看作是第三种情况隐式绑定的特殊情况，因为在浏览器环境下，全局环境就是window，而window通常会被省略(window.foo() 省略变成foo())。</li>
-</ol>
-<p>如果以上几种情况出现了冲突，那么按照优先级从高到低的顺序决定this的指向。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Learn/JavaScript/Objects/Basics" target="_blank" rel="noopener">Javascript 对象基础-MDN</a></li>
-<li><a href="https://www.ruanyifeng.com/blog/2018/06/javascript-this.html" target="_blank" rel="noopener">JavaScript的this原理-阮一峰</a></li>
-<li><a href="https://juejin.im/entry/5a20d18af265da43062a9031" target="_blank" rel="noopener">掌握JS中的指向只需要记忆五大原则</a></li>
-<li><a href="https://github.com/mqyqingfeng/Blog/issues/7" target="_blank" rel="noopener">JavaScript深入之从ECMAScript解读this</a></li>
-<li><a href="http://yanhaijing.com/es5/#80" target="_blank" rel="noopener">ECMAScript规范中文版</a></li>
-</ol>
+        <p> JavaScript具有自动垃圾收集机制，也就是说，执行环境会自动管理代码执行过程中使用的内存。</p>
+<p>这种自动管理内存的方式其实很简单，就是每隔一段时间就找出没有再使用的内存，释放掉。而找出没有被使用的内存的方式一般有以下两种：</p>
+<h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p>引用计数是指跟踪记录每个值被使用的次数。当声明了一个变量，并且将一个引用类型的值赋给这个变量，那么这个值的引用次数就记为1。如果接下来又把这个值赋给了另一个变量，那么引用次数就会加一。与之相法，如果某个变量不再引用这个值，那么引用次数减一。如果一个值的引用次数变为0，那么这个值所占用的内存将在下一次垃圾回收中被回收掉。</p>
+<p>听起来简单而又美好，然而这种方式存在一个很大的问题，那就是无法回收循环引用的值。举个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj1 = &#123;</span><br><span class="line">    a: obj2</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> obj2 = &#123;</span><br><span class="line">    b: obj1</span><br><span class="line">&#125;</span><br><span class="line">obj1 = <span class="literal">null</span>;</span><br><span class="line">obj2 = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<p>因为obj1中的属性a没有取消对obj2的引用，所以obj2的引用次数永远不会为0，也就永远不会被回收。</p>
+<h3 id="标记清除"><a href="#标记清除" class="headerlink" title="标记清除"></a>标记清除</h3><p>标记清除把对象是否不再被使用简化为对象是否能够被获得。</p>
+<p>JavaScript引擎将会定期的从根对象(全局对象)开始，找到所有被跟对象引用的对象，然后再去遍历这些对象，依次递归下去，将会找到所有可以获得的对象。然后就可以把内存中的对象分为可获得对象和不可获得对象。然后就可以进行垃圾回收了。</p>
+<p>这个方法相比引用计数方法不会有循环引用的问题，因为没有被引用的对象是不可获得的，相反却不一定，被引用的对象也有可能是不可获得的。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上就是JavaScript中的垃圾回收的简单介绍。其实对于垃圾回收的算法实现更加复杂，标记清除和引用计数只是一种实现垃圾回收的思路。在V8中，为了使得垃圾回收更加的高效，堆使用的内存被分为新生代和老生代，引擎中的内存在新生代和老生代中转化，而且为了使得回收之后的空间不那么碎片化，还使用了标记整理的方式来对内存进行处理，在这里不再展开介绍。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>垃圾回收-JavaScript高级程序设计4.3</p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Memory_Management" target="_blank" rel="noopener">内存管理</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2017/04/memory-leak.html" target="_blank" rel="noopener">JavaScript内存泄漏教程-阮一峰</a></p>
+<p><a href="https://juejin.im/post/5ad3f1156fb9a028b86e78be" target="_blank" rel="noopener">聊聊V8引擎的垃圾回收</a></p>
 
       
     </div>
@@ -448,8 +445,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/04/作用域和作用域链/" rel="next" title="作用域到作用域链">
-                <i class="fa fa-chevron-left"></i> 作用域到作用域链
+              <a href="/2020/03/31/js的事件循环/" rel="next" title="js的事件循环">
+                <i class="fa fa-chevron-left"></i> js的事件循环
               </a>
             
           </div>
@@ -458,8 +455,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/03/16/闭包/" rel="prev" title="闭包">
-                闭包 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/04/02/浏览器的事件/" rel="prev" title="浏览器的事件">
+                浏览器的事件 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -584,7 +581,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引用计数"><span class="nav-number">1.</span> <span class="nav-text">引用计数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标记清除"><span class="nav-number">2.</span> <span class="nav-text">标记清除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>

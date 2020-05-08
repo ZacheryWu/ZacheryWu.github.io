@@ -99,7 +99,7 @@
   <meta name="description" content="吴子轩的个人博客">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Zachery Wu">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="Zachery Wu">
 <meta property="og:description" content="吴子轩的个人博客">
 <meta property="og:locale" content="default">
@@ -112,7 +112,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/page/2/">
 
 
 
@@ -209,7 +209,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -288,7 +288,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/25/安全防范知识/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/04/作用域和作用域链/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zachery Wu">
@@ -308,7 +308,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2020/04/25/安全防范知识/" class="post-title-link" itemprop="url">安全防范知识</a>
+                <a href="/2020/03/04/作用域和作用域链/" class="post-title-link" itemprop="url">作用域到作用域链</a>
               
             
           </h1>
@@ -333,7 +333,7 @@
                 
               
 
-              <time title="创建时间：2020-04-25 10:21:36" itemprop="dateCreated datePublished" datetime="2020-04-25T10:21:36+08:00">2020-04-25</time>
+              <time title="创建时间：2020-03-04 15:57:00" itemprop="dateCreated datePublished" datetime="2020-03-04T15:57:00+08:00">2020-03-04</time>
             
 
             
@@ -362,7 +362,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">5.1k</span>
+                <span title="本文字数">15k</span>
               
 
               
@@ -376,7 +376,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">4 分钟</span>
               
             </div>
           
@@ -399,14 +399,20 @@
         
           
             <p>
-              安全是很复杂的一个领域，这里只选一些前端比较常见的安全问题进行总结。
-XSSXSS介绍XSS是指跨站脚本攻击，是cross site scripting的缩写，攻击者通过注入，在页面上执行恶意的脚本，可以获取到用户的cookie、sessionID等用户敏感信息。为了和CSS区分，所以缩写为XSS。
+               作用域和作用域链比原型略微复杂了一些，主要牵扯到以下这几个概念：
+
+执行上下文和执行上下文栈
+作用域链（Scope chain）
+变量对象（VO）
+
+上面的概念是按照自顶向下的顺序的，从最宏观角度开始分析。
+执行上下文和执行上下文栈执行上下文是JavaScript代码执行时环境的抽象，所有的Jav
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2020/04/25/安全防范知识/#more" rel="contents">
+              <a class="btn" href="/2020/03/04/作用域和作用域链/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -466,7 +472,7 @@ XSSXSS介绍XSS是指跨站脚本攻击，是cross site scripting的缩写，攻
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/18/浏览器的工作原理/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/03/原型和原型链/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zachery Wu">
@@ -486,7 +492,7 @@ XSSXSS介绍XSS是指跨站脚本攻击，是cross site scripting的缩写，攻
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2020/04/18/浏览器的工作原理/" class="post-title-link" itemprop="url">浏览器的工作原理</a>
+                <a href="/2020/03/03/原型和原型链/" class="post-title-link" itemprop="url">原型和原型链</a>
               
             
           </h1>
@@ -511,723 +517,7 @@ XSSXSS介绍XSS是指跨站脚本攻击，是cross site scripting的缩写，攻
                 
               
 
-              <time title="创建时间：2020-04-18 18:49:09" itemprop="dateCreated datePublished" datetime="2020-04-18T18:49:09+08:00">2020-04-18</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">0</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              
-              
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/04/18/浏览器的工作原理/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/13/浏览器缓存机制/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zachery Wu">
-      <meta itemprop="description" content="吴子轩的个人博客">
-      <meta itemprop="image" content="/images/avatar1.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zachery Wu">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/04/13/浏览器缓存机制/" class="post-title-link" itemprop="url">浏览器缓存机制</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-04-13 21:57:43" itemprop="dateCreated datePublished" datetime="2020-04-13T21:57:43+08:00">2020-04-13</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">3.6k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              浏览器的缓存机制，其实都是根据HTTP请求的缓存标识来完成的，这些缓存标识都放在HTTP的请求头和响应头中。
-从缓存的角度看，一次HTTP请求的过程如下：
-
-浏览器去查询缓存，如果有该请求的缓存并且有效，则直接返回，不需要发起网络请求
-如果不存在对应的缓存，或者缓存已经失效，则发起网络请求
-网络请求
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/04/13/浏览器缓存机制/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/02/浏览器的事件/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zachery Wu">
-      <meta itemprop="description" content="吴子轩的个人博客">
-      <meta itemprop="image" content="/images/avatar1.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zachery Wu">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/04/02/浏览器的事件/" class="post-title-link" itemprop="url">浏览器的事件</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-04-02 19:17:13" itemprop="dateCreated datePublished" datetime="2020-04-02T19:17:13+08:00">2020-04-02</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">13k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">3 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-               事件是将JavaScript和网页连接到一起的主要方式。为了能够使用交互完成交互，我们需要了解事件的传播(事件流)，以及事件的处理和使用方式。
-事件流在浏览器的发展过程中，IE和Netscape团队提出了完全相反的事件流概念，也就是我们常说的事件冒泡和事件捕获，后面w3c为了统一事件流，制定了统一
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/04/02/浏览器的事件/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/01/js的垃圾收集/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zachery Wu">
-      <meta itemprop="description" content="吴子轩的个人博客">
-      <meta itemprop="image" content="/images/avatar1.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zachery Wu">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/04/01/js的垃圾收集/" class="post-title-link" itemprop="url">js的垃圾收集</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-04-01 21:24:21" itemprop="dateCreated datePublished" datetime="2020-04-01T21:24:21+08:00">2020-04-01</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">2.3k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">1 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-               JavaScript具有自动垃圾收集机制，也就是说，执行环境会自动管理代码执行过程中使用的内存。
-这种自动管理内存的方式其实很简单，就是每隔一段时间就找出没有再使用的内存，释放掉。而找出没有被使用的内存的方式一般有以下两种：
-引用计数引用计数是指跟踪记录每个值被使用的次数。当声明了一个变量，并且将
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/04/01/js的垃圾收集/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/31/js的事件循环/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zachery Wu">
-      <meta itemprop="description" content="吴子轩的个人博客">
-      <meta itemprop="image" content="/images/avatar1.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zachery Wu">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/03/31/js的事件循环/" class="post-title-link" itemprop="url">js的事件循环</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-31 21:21:14" itemprop="dateCreated datePublished" datetime="2020-03-31T21:21:14+08:00">2020-03-31</time>
+              <time title="创建时间：2020-03-03 21:38:07" itemprop="dateCreated datePublished" datetime="2020-03-03T21:38:07+08:00">2020-03-03</time>
             
 
             
@@ -1293,18 +583,14 @@ XSSXSS介绍XSS是指跨站脚本攻击，是cross site scripting的缩写，攻
         
           
             <p>
-               js主要有浏览器和node这两个执行环境，虽说node采用了V8作为js的解析引擎，但使用了libuv来进行I/O处理。因此js在浏览器和node端的事件循环不一样，也导致相同代码的执行结果可能不一样。
-浏览器端浏览器端的事件循环分为三块：
-
-执行栈
-宏任务队列(macro-task)
-微任务队列
+              原型和原型链，其实就是由__proto__ 和 prototype 这两个属性组成的链状结构。搞懂了这两个属性，也就搞懂了原型和原型链。
+prototypeJavaScript中的每个函数都拥有prototype这个属性，这个属性指向该函数的原型对象，而以这个函数作为构造函数创建出的实例的原型就是这
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2020/03/31/js的事件循环/#more" rel="contents">
+              <a class="btn" href="/2020/03/03/原型和原型链/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1364,7 +650,7 @@ XSSXSS介绍XSS是指跨站脚本攻击，是cross site scripting的缩写，攻
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/27/继承/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/02/文件的上传下载全攻略/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zachery Wu">
@@ -1384,7 +670,7 @@ XSSXSS介绍XSS是指跨站脚本攻击，是cross site scripting的缩写，攻
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2020/03/27/继承/" class="post-title-link" itemprop="url">继承</a>
+                <a href="/2020/03/02/文件的上传下载全攻略/" class="post-title-link" itemprop="url">文件的上传下载全攻略</a>
               
             
           </h1>
@@ -1409,7 +695,7 @@ XSSXSS介绍XSS是指跨站脚本攻击，是cross site scripting的缩写，攻
                 
               
 
-              <time title="创建时间：2020-03-27 11:11:36" itemprop="dateCreated datePublished" datetime="2020-03-27T11:11:36+08:00">2020-03-27</time>
+              <time title="创建时间：2020-03-02 14:56:10" itemprop="dateCreated datePublished" datetime="2020-03-02T14:56:10+08:00">2020-03-02</time>
             
 
             
@@ -1438,542 +724,7 @@ XSSXSS介绍XSS是指跨站脚本攻击，是cross site scripting的缩写，攻
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">17k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">4 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-               JavaScript中的继承有多种实现方式，各有优缺点
-原型链function Cat() &#123;	this.sayHi = function() &#123;		console.log('miao~');	&#125;,	this.habit = ['sleep', 'mouse']&#1
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/03/27/继承/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/17/call、aplly、bind模拟实现/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zachery Wu">
-      <meta itemprop="description" content="吴子轩的个人博客">
-      <meta itemprop="image" content="/images/avatar1.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zachery Wu">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/03/17/call、aplly、bind模拟实现/" class="post-title-link" itemprop="url">call、aplly、bind模拟实现</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-17 17:32:58" itemprop="dateCreated datePublished" datetime="2020-03-17T17:32:58+08:00">2020-03-17</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">23k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">6 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-               除了点操作符也就是隐式绑定外，还有几种方式可以影响this的指向，下面来模拟实现以下这几种方式
-call、apply、bindcall的模拟实现call() 方法使用一个指定的this值和单独给出的零个、一个或多个参数来调用一个函数。    -MDN
-根据上面这句话我们可以知道，call方法主要有
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/03/17/call、aplly、bind模拟实现/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/16/闭包/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zachery Wu">
-      <meta itemprop="description" content="吴子轩的个人博客">
-      <meta itemprop="image" content="/images/avatar1.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zachery Wu">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/03/16/闭包/" class="post-title-link" itemprop="url">闭包</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-16 20:35:31" itemprop="dateCreated datePublished" datetime="2020-03-16T20:35:31+08:00">2020-03-16</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">14k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">3 分钟</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              函数与对其状态即词法环境的引用共同构成闭包。也就是说，闭包可以让你从内部函数访问外部函数的作用域。在JavaScript中，函数在每次创建时生成闭包。 ----《MDN 闭包》
-上面是MDN上关于闭包的定义，可以看出，按照这个说法，所有的JavaScript函数都是闭包，然而和我们平时面试时所说的闭
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/03/16/闭包/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/this的指向/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zachery Wu">
-      <meta itemprop="description" content="吴子轩的个人博客">
-      <meta itemprop="image" content="/images/avatar1.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zachery Wu">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2020/03/12/this的指向/" class="post-title-link" itemprop="url">this的指向</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-12 21:01:30" itemprop="dateCreated datePublished" datetime="2020-03-12T21:01:30+08:00">2020-03-12</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">本文字数：</span>
-                
-                <span title="本文字数">1.4k</span>
+                <span title="本文字数">165</span>
               
 
               
@@ -2010,14 +761,918 @@ call、apply、bindcall的模拟实现call() 方法使用一个指定的this值�
         
           
             <p>
-              JavaScript是一门词法作用域的语言，为了实现动态的能力，JavaScript引入了this。词法作用域又叫静态作用域，与之相对的是动态作用域，而动态作用域则是指根据函数调用的位置来确定变量作用范围这种规则。
-而JavaScript实现动态作用域的方法就是通过this，this在函数体内部，指
+              前端文件下载上传全攻略在各种商务系统、管理系统中都会涉及到文件的上传和下载，而文件的上传和下载也在不同的场景中发展出了不同的方式。
+
+              
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/03/02/文件的上传下载全攻略/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/01/2019总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zachery Wu">
+      <meta itemprop="description" content="吴子轩的个人博客">
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zachery Wu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/01/01/2019总结/" class="post-title-link" itemprop="url">2019总结</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-01-01 16:27:33" itemprop="dateCreated datePublished" datetime="2020-01-01T16:27:33+08:00">2020-01-01</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">2.4k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              2019年总结算是在20年的开头总结了，其实讲道理应该是放在19年的末尾的，感觉自己的拖延症有了一定的缓解，不过还是存在的，继续加油哈哈。
+先来看看计划的完成情况吧：
+生活类
+坚持锻炼 75%
+看书 100%
+九型人格心理学
+浪潮之巅
+明朝那些事儿
+小狗钱钱
+围城
+人类简史(还没来得及写影评)
+必须
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2020/03/12/this的指向/#more" rel="contents">
+              <a class="btn" href="/2020/01/01/2019总结/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/22/webpack学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zachery Wu">
+      <meta itemprop="description" content="吴子轩的个人博客">
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zachery Wu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/22/webpack学习/" class="post-title-link" itemprop="url">webpack学习</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-22 20:41:00" itemprop="dateCreated datePublished" datetime="2019-12-22T20:41:00+08:00">2019-12-22</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">38k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">9 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              看了这篇文章，自己敲了两遍，现在试着输出一下。
+基本配置初始化项目首先创建一个空的项目，使用npm init 初始化一下，这是个webpack的学习项目，因此首先要做的就是安装webpack了。
+npm i -D webpack webpack-cli
+初步建立一下文件的目录
+├─build //w
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/12/22/webpack学习/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/21/基于elementui的表格穿梭框组件的开发/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zachery Wu">
+      <meta itemprop="description" content="吴子轩的个人博客">
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zachery Wu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/08/21/基于elementui的表格穿梭框组件的开发/" class="post-title-link" itemprop="url">基于elementui的表格穿梭框组件的开发</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-21 22:21:43" itemprop="dateCreated datePublished" datetime="2019-08-21T22:21:43+08:00">2019-08-21</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">11k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">3 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              在开发过程中需要用到一个表格的穿梭框，但发现elementui中的穿梭框不支持自定义，本着不重复造轮子的原则去npm上找了一圈，并没有找到，那只能自己撸一个了。最终的效果是这样的：其实这个组件很简单，两个可以复选的表格，以及两个控制移动的按钮就完成了，不过后续也在这个的基础上添加了一些功能，如禁用某
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/08/21/基于elementui的表格穿梭框组件的开发/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/08/使用回溯的方法解决子集、排列组合等类型的题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zachery Wu">
+      <meta itemprop="description" content="吴子轩的个人博客">
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zachery Wu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/08/使用回溯的方法解决子集、排列组合等类型的题/" class="post-title-link" itemprop="url">使用回溯的方法解决子集、排列组合等类型的题</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-08 22:12:29" itemprop="dateCreated datePublished" datetime="2019-07-08T22:12:29+08:00">2019-07-08</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">34k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">9 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              使用回溯的方法解决子集、排列组合等类型的题在刷leetcode的时候，发现一个答案把这类题目放到了一起，并且都采用了同一种方法解题，感觉很有意思，就自己参照该答案的方法，用js做了一遍，也是很有收获，对于递归和dfs都有了更深的理解。
+1. 子集问题（leetcode第78题）Question： G
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/07/08/使用回溯的方法解决子集、排列组合等类型的题/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/06/vue.js双向数据绑定/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zachery Wu">
+      <meta itemprop="description" content="吴子轩的个人博客">
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zachery Wu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/06/vue.js双向数据绑定/" class="post-title-link" itemprop="url">vue.js双向数据绑定</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-06 16:45:01" itemprop="dateCreated datePublished" datetime="2019-03-06T16:45:01+08:00">2019-03-06</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">26k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">7 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              前言Vue.js有很多有用的特性，其中最显著的就是双向绑定，第一次接触到Vue.js的时候，就被这种简单方便的特性吸引了。现在自己也尝试着用Vue.js中使用的Object.defineProperty来实现双向绑定。
+最终的效果是：
+
+&lt;div id="app"&gt;	&lt;input 
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/06/vue.js双向数据绑定/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2066,7 +1721,7 @@ call、apply、bindcall的模拟实现call() 方法使用一个指定的this值�
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
 
 

@@ -96,24 +96,24 @@
 
 
 
-  <meta name="description" content="JavaScript是一门词法作用域的语言，为了实现动态的能力，JavaScript引入了this。词法作用域又叫静态作用域，与之相对的是动态作用域，而动态作用域则是指根据函数调用的位置来确定变量作用范围这种规则。 而JavaScript实现动态作用域的方法就是通过this，this在函数体内部，指向函数当前的运行环境。 因为this会有多种出现方式，我们归纳为四种，优先级从高到低分别为：  构造">
+  <meta name="description" content="浏览器的缓存机制，其实都是根据HTTP请求的缓存标识来完成的，这些缓存标识都放在HTTP的请求头和响应头中。 从缓存的角度看，一次HTTP请求的过程如下：  浏览器去查询缓存，如果有该请求的缓存并且有效，则直接返回，不需要发起网络请求 如果不存在对应的缓存，或者缓存已经失效，则发起网络请求 网络请求返回结果和缓存规则 浏览器按照返回的缓存规则把返回的结果存储到浏览器缓存中  可以看到，在第一步中，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="this的指向">
-<meta property="og:url" content="http://yoursite.com/2020/03/12/this的指向/index.html">
+<meta property="og:title" content="浏览器缓存机制">
+<meta property="og:url" content="http://yoursite.com/2020/04/13/浏览器缓存机制/index.html">
 <meta property="og:site_name" content="Zachery Wu">
-<meta property="og:description" content="JavaScript是一门词法作用域的语言，为了实现动态的能力，JavaScript引入了this。词法作用域又叫静态作用域，与之相对的是动态作用域，而动态作用域则是指根据函数调用的位置来确定变量作用范围这种规则。 而JavaScript实现动态作用域的方法就是通过this，this在函数体内部，指向函数当前的运行环境。 因为this会有多种出现方式，我们归纳为四种，优先级从高到低分别为：  构造">
+<meta property="og:description" content="浏览器的缓存机制，其实都是根据HTTP请求的缓存标识来完成的，这些缓存标识都放在HTTP的请求头和响应头中。 从缓存的角度看，一次HTTP请求的过程如下：  浏览器去查询缓存，如果有该请求的缓存并且有效，则直接返回，不需要发起网络请求 如果不存在对应的缓存，或者缓存已经失效，则发起网络请求 网络请求返回结果和缓存规则 浏览器按照返回的缓存规则把返回的结果存储到浏览器缓存中  可以看到，在第一步中，">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-03-12T13:41:37.815Z">
+<meta property="og:updated_time" content="2020-04-16T13:50:17.247Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="this的指向">
-<meta name="twitter:description" content="JavaScript是一门词法作用域的语言，为了实现动态的能力，JavaScript引入了this。词法作用域又叫静态作用域，与之相对的是动态作用域，而动态作用域则是指根据函数调用的位置来确定变量作用范围这种规则。 而JavaScript实现动态作用域的方法就是通过this，this在函数体内部，指向函数当前的运行环境。 因为this会有多种出现方式，我们归纳为四种，优先级从高到低分别为：  构造">
+<meta name="twitter:title" content="浏览器缓存机制">
+<meta name="twitter:description" content="浏览器的缓存机制，其实都是根据HTTP请求的缓存标识来完成的，这些缓存标识都放在HTTP的请求头和响应头中。 从缓存的角度看，一次HTTP请求的过程如下：  浏览器去查询缓存，如果有该请求的缓存并且有效，则直接返回，不需要发起网络请求 如果不存在对应的缓存，或者缓存已经失效，则发起网络请求 网络请求返回结果和缓存规则 浏览器按照返回的缓存规则把返回的结果存储到浏览器缓存中  可以看到，在第一步中，">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/12/this的指向/">
+  <link rel="canonical" href="http://yoursite.com/2020/04/13/浏览器缓存机制/">
 
 
 
@@ -123,7 +123,7 @@
   };
 </script>
 
-  <title>this的指向 | Zachery Wu</title>
+  <title>浏览器缓存机制 | Zachery Wu</title>
   
 
 
@@ -288,7 +288,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/this的指向/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/13/浏览器缓存机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zachery Wu">
@@ -305,7 +305,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">this的指向
+          <h1 class="post-title" itemprop="name headline">浏览器缓存机制
 
               
             
@@ -331,7 +331,7 @@
                 
               
 
-              <time title="创建时间：2020-03-12 21:01:30" itemprop="dateCreated datePublished" datetime="2020-03-12T21:01:30+08:00">2020-03-12</time>
+              <time title="创建时间：2020-04-13 21:57:43" itemprop="dateCreated datePublished" datetime="2020-04-13T21:57:43+08:00">2020-04-13</time>
             
 
             
@@ -367,7 +367,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.4k</span>
+                <span title="本文字数">3.6k</span>
               
 
               
@@ -401,23 +401,57 @@
       
 
       
-        <p>JavaScript是一门词法作用域的语言，为了实现动态的能力，JavaScript引入了this。词法作用域又叫静态作用域，与之相对的是动态作用域，而动态作用域则是指根据函数调用的位置来确定变量作用范围这种规则。</p>
-<p>而JavaScript实现动态作用域的方法就是通过this，this在函数体内部，指向函数当前的运行环境。</p>
-<p>因为this会有多种出现方式，我们归纳为四种，优先级从高到低分别为：</p>
+        <p>浏览器的缓存机制，其实都是根据HTTP请求的缓存标识来完成的，这些缓存标识都放在HTTP的请求头和响应头中。</p>
+<p>从缓存的角度看，一次HTTP请求的过程如下：</p>
 <ol>
-<li>构造绑定，指的是函数作为构造函数，通过 new foo()这种方式创建的对象，在这种情况下，foo函数中的所有this都指向创建出的新的对象。</li>
-<li>显式绑定，指的是通过call、apply、bind这种很显然的方法来对函数foo进行this的绑定，此时，foo中的所有this指向都会指向call、apply、bind传入的第一个参数中的对象。</li>
-<li>隐式绑定，指的是通过obj.foo()这种隐式的方法来调用函数时，foo中的this都指向obj这个对象。</li>
-<li>默认绑定，在默认情况下，this指向全局对象。其实这种情况可以看作是第三种情况隐式绑定的特殊情况，因为在浏览器环境下，全局环境就是window，而window通常会被省略(window.foo() 省略变成foo())。</li>
+<li>浏览器去查询缓存，如果有该请求的缓存并且有效，则直接返回，不需要发起网络请求</li>
+<li>如果不存在对应的缓存，或者缓存已经失效，则发起网络请求</li>
+<li>网络请求返回结果和缓存规则</li>
+<li>浏览器按照返回的缓存规则把返回的结果存储到浏览器缓存中</li>
 </ol>
-<p>如果以上几种情况出现了冲突，那么按照优先级从高到低的顺序决定this的指向。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Learn/JavaScript/Objects/Basics" target="_blank" rel="noopener">Javascript 对象基础-MDN</a></li>
-<li><a href="https://www.ruanyifeng.com/blog/2018/06/javascript-this.html" target="_blank" rel="noopener">JavaScript的this原理-阮一峰</a></li>
-<li><a href="https://juejin.im/entry/5a20d18af265da43062a9031" target="_blank" rel="noopener">掌握JS中的指向只需要记忆五大原则</a></li>
-<li><a href="https://github.com/mqyqingfeng/Blog/issues/7" target="_blank" rel="noopener">JavaScript深入之从ECMAScript解读this</a></li>
-<li><a href="http://yanhaijing.com/es5/#80" target="_blank" rel="noopener">ECMAScript规范中文版</a></li>
+<p>可以看到，在第一步中，根据缓存是否命中分为两种情况：</p>
+<ul>
+<li>强缓存，根据请求头的expires和cache-control判断是否命中缓存，如果命中直接从缓存中读取资源，如果没有命中则需要向服务器发起请求。</li>
+<li>协商缓存，通过Last-Modified和eTag来判断是否命中缓存，如果命中则直接从缓存中获取资源，如果没有命中，则需要从请求中获取资源。</li>
+</ul>
+<h3 id="强制缓存"><a href="#强制缓存" class="headerlink" title="强制缓存"></a>强制缓存</h3><ol>
+<li><p>cache-control</p>
+<p>这是个通用首部字段，既可以用在请求头里也可以用在返回头里，只是使用的指令不太相同。出现于HTTP/1.1优先级高于expires，表示相对缓存的时间，使用方式如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cache-control: max-age=<span class="number">30000</span></span><br></pre></td></tr></table></figure>
+<p>cache-control作为请求头使用时，常用的指令如下:</p>
+<p>| 指令     | 说明                                       |<br>| ——– | —————————————— |<br>| no-cache | 强制向源服务器再次验证(会有资源缓存到本地) |<br>| no-store | 不在本地缓存                               |<br>| max-age  | 缓存有效的时间(该事件为相对值)             |</p>
+<p>cache-control作为响应头使用时，常用指令如下：</p>
+<p>| 指令     | 说明                                                        |<br>| ——– | ———————————————————– |<br>| public   | 指可以被所有的用户缓存，包括客户端和中间CDN等中间代理服务器 |<br>| private  | 指只能被客户端缓存，代理服务器不允许缓存                    |<br>| no-cache | 缓存前必须要向服务器验证有效性                              |<br>| no-store | 不允许在本地缓存                                            |<br>| max-age  | 缓存有效的时间                                              |</p>
+</li>
+<li><p>expires</p>
+<p>这是一个返回头的实体首部字段，可以指定资源缓存失效的时间，使用方式如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Expires: Thur, <span class="number">16</span> <span class="number">2020</span> <span class="number">07</span>:<span class="number">20</span>:<span class="number">00</span> GMT</span><br></pre></td></tr></table></figure>
+<p>这个字段在HTTP/1.0就被加入了，因为此字段是根据客户端时间来判断的，因此会因为客户端修改时间而失效，所以在后续的HTTP版本中引入了cache-control的max-age，也因此在两者同时出现时cache-control的max-age指令的优先级更高。</p>
+</li>
 </ol>
+<h2 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h2><p>在强缓存没有命中的时候，会向服务端发起请求，验证协商缓存是否命中，如果协商缓存命中，那么请求返回状态码为304，如果没有命中，则直接返回并且状态码为200。</p>
+<p>协商缓存利用的字段是last-modify/if-modify-since 和 etag/if-none-match 这两对头部字段来管理。</p>
+<ol>
+<li><p>last-modify/if-modify-since</p>
+<ul>
+<li>last-modify，顾名思义是指资源的最后变化日期，这是一个实体头部字段</li>
+<li>if-modify-since，这是一个请求头部字段，一般会携带上次这个请求返回的last-modify</li>
+</ul>
+<p>浏览器携带if-modify-since发出请求后，服务端对资源进行判断，如果在该日期之后没有更新那么表示协商缓存命中返回304状态码，否则将携带最新的资源返回，并且在last-modify中保存最后更新的时间。</p>
+<p>但是在本地打开资源文件，却没有修改时，也会修改last-modify返回的时间，所以出现了etag/if-none-match字段。</p>
+</li>
+<li><p>etag/if-none-match</p>
+<ul>
+<li>etag，将资源以字符串的形式表示的唯一标识，只与资源的内容相关，和修改时间等没有关系。etag可以保证每个资源是唯一的。</li>
+<li>if-none-match，在请求时将上次该请求返回的etag携带，服务端进行比对，如果相同，说明资源不变，协商缓存命中返回状态码为304，如果不同，那么资源变化，返回新的资源并生成一个新的etag值在返回头中。</li>
+</ul>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过正确的使用缓存可以减少很多不必要的网络请求。但是如果使用不当，可能会导致资源无法正常更新，所以也就有了我们常说的，清下缓存再试试…</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://github.com/amandakelake/blog/issues/41" target="_blank" rel="noopener">浏览器缓存机制</a></p>
+<p><a href>掘金小册-前端面试之道</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ" target="_blank" rel="noopener">HTTP缓存</a></p>
+<p><a href>图解HTTP</a></p>
 
       
     </div>
@@ -448,8 +482,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/04/作用域和作用域链/" rel="next" title="作用域到作用域链">
-                <i class="fa fa-chevron-left"></i> 作用域到作用域链
+              <a href="/2020/04/02/浏览器的事件/" rel="next" title="浏览器的事件">
+                <i class="fa fa-chevron-left"></i> 浏览器的事件
               </a>
             
           </div>
@@ -458,8 +492,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/03/16/闭包/" rel="prev" title="闭包">
-                闭包 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/04/18/浏览器的工作原理/" rel="prev" title="浏览器的工作原理">
+                浏览器的工作原理 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -584,7 +618,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#强制缓存"><span class="nav-number">1.</span> <span class="nav-text">强制缓存</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#协商缓存"><span class="nav-number"></span> <span class="nav-text">协商缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number"></span> <span class="nav-text">参考资料</span></a></li></div>
             
 
           </div>

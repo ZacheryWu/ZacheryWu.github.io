@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="事件是将JavaScript和网页连接到一起的主要方式。为了能够使用交互完成交互，我们需要了解事件的传播(事件流)，以及事件的处理和使用方式。 事件流在浏览器的发展过程中，IE和Netscape团队提出了完全相反的事件流概念，也就是我们常说的事件冒泡和事件捕获，后面w3c为了统一事件流，制定了统一的标准—-先捕获再冒泡。 DOM事件模型分为三个阶段：事件捕获阶段，处于目标阶段、事件冒泡阶段。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器的事件">
+<meta property="og:url" content="http://yoursite.com/2020/04/02/浏览器的事件/index.html">
+<meta property="og:site_name" content="Zachery Wu">
+<meta property="og:description" content="事件是将JavaScript和网页连接到一起的主要方式。为了能够使用交互完成交互，我们需要了解事件的传播(事件流)，以及事件的处理和使用方式。 事件流在浏览器的发展过程中，IE和Netscape团队提出了完全相反的事件流概念，也就是我们常说的事件冒泡和事件捕获，后面w3c为了统一事件流，制定了统一的标准—-先捕获再冒泡。 DOM事件模型分为三个阶段：事件捕获阶段，处于目标阶段、事件冒泡阶段。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="d:/hexo/blog/source/images/eventflow.svg">
+<meta property="og:image" content="d:/hexo/blog/source/images/1585834879294.png">
+<meta property="og:updated_time" content="2020-04-03T09:32:06.911Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浏览器的事件">
+<meta name="twitter:description" content="事件是将JavaScript和网页连接到一起的主要方式。为了能够使用交互完成交互，我们需要了解事件的传播(事件流)，以及事件的处理和使用方式。 事件流在浏览器的发展过程中，IE和Netscape团队提出了完全相反的事件流概念，也就是我们常说的事件冒泡和事件捕获，后面w3c为了统一事件流，制定了统一的标准—-先捕获再冒泡。 DOM事件模型分为三个阶段：事件捕获阶段，处于目标阶段、事件冒泡阶段。">
+<meta name="twitter:image" content="d:/hexo/blog/source/images/eventflow.svg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/02/浏览器的事件/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>浏览器的事件 | Zachery Wu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zachery Wu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/02/浏览器的事件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zachery Wu">
+      <meta itemprop="description" content="吴子轩的个人博客">
+      <meta itemprop="image" content="/images/avatar1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zachery Wu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">浏览器的事件
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-02 19:17:13" itemprop="dateCreated datePublished" datetime="2020-04-02T19:17:13+08:00">2020-04-02</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">13k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">3 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> 事件是将JavaScript和网页连接到一起的主要方式。为了能够使用交互完成交互，我们需要了解事件的传播(事件流)，以及事件的处理和使用方式。</p>
+<h2 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h2><p>在浏览器的发展过程中，IE和Netscape团队提出了完全相反的事件流概念，也就是我们常说的事件冒泡和事件捕获，后面w3c为了统一事件流，制定了统一的标准—-先捕获再冒泡。</p>
+<p>DOM事件模型分为三个阶段：事件捕获阶段，处于目标阶段、事件冒泡阶段。</p>
+<ol>
+<li>首先发生的是事件捕获，从document前往事件发生的元素，捕获前进，遇到注册的捕获的事件就会触发执行。(规范要求从document对象开始传播，然而大部分浏览器都是从window开始的)</li>
+<li>到达事件位置，触发事件（如果这里是最底层元素，并且这里既注册了捕获事件也注册了冒泡事件，那么谁先注册谁先执行）</li>
+<li>事件触发地点往document方向，冒泡前进，遇到注册的冒泡阶段就会立即执行。</li>
+</ol>
+<p>配上一张w3c的说明图：</p>
+<p><img src="D:\hexo\blog\source\images\eventflow.svg" alt="Graphical representation of an event dispatched in a DOM tree using the DOM event flow"></p>
+<p>以下代码可以很好的说明上面的顺序：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s1 = <span class="built_in">document</span>.getElementById(<span class="string">'s1'</span>);</span><br><span class="line"><span class="keyword">const</span> s2 = <span class="built_in">document</span>.getElementById(<span class="string">'s2'</span>);</span><br><span class="line"><span class="keyword">const</span> s3 = <span class="built_in">document</span>.getElementById(<span class="string">'s3'</span>);</span><br><span class="line">s1.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'s1'</span>);</span><br><span class="line">&#125;, <span class="literal">true</span>)</span><br><span class="line">s2.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'s2 冒泡'</span>);</span><br><span class="line">&#125;, <span class="literal">false</span>)</span><br><span class="line">s2.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'s2 捕获'</span>);</span><br><span class="line">&#125;, <span class="literal">true</span>)</span><br><span class="line">s3.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'s3 冒泡'</span>)</span><br><span class="line">&#125;, <span class="literal">true</span>)</span><br><span class="line">s3.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'s3 捕获'</span>)</span><br><span class="line">&#125;, <span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="D:\hexo\blog\source\images\1585834879294.png" alt="1585834879294"></p>
+<p>(注意这里的s3是先触发的冒泡事件，因为s3上先注册冒泡事件，并且s3是最底层元素)</p>
+<h2 id="事件处理程序"><a href="#事件处理程序" class="headerlink" title="事件处理程序"></a>事件处理程序</h2><p>有三种方法为一个DOM元素注册事件回调。</p>
+<ol>
+<li><p>HTML事件处理程序</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"alert('Hello world!')"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样的注册方式有个缺点，那就是在html已经渲染，但是js未加载完成的时候，如果触发了事件，那么是找不到对应的回调函数的。而且会导致js和html代码高度耦合，这也是现在使用这种方式的人较少的原因。</p>
+</li>
+<li><p>DOM0级事件处理程序</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myButton.onclick = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;alert(<span class="string">'hello!'</span>)&#125;</span><br></pre></td></tr></table></figure>
+<p>以这种方式添加的事件将会以事件冒泡的形式捕获，也可以通过同样的方法删除掉这个回调：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myButton.onclick = <span class="literal">null</span></span><br></pre></td></tr></table></figure>
+<p>这样的方式注册事件需要注意一点，那就是在这段js代码被解析之前，这个事件是不会被触发的。</p>
+</li>
+<li><p>DOM2级事件处理程序</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">myButton.addEventListener(<span class="string">'click'</span>, greet, <span class="literal">false</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">'Hello world'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>addEventListener接受三个参数，触发方式、回调函数和捕获方式。如果第三个参数为false那么表示冒泡阶段触发，如果为true那么表示在捕获阶段触发。</p>
+<p>如果想要删除这个事件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myButton.removeEventListener(<span class="string">'click'</span>, greet);</span><br></pre></td></tr></table></figure>
+<p>大多数情况下，我们采用冒泡阶段触发事件的方式来进行开发。</p>
+</li>
+</ol>
+<h2 id="内存和性能"><a href="#内存和性能" class="headerlink" title="内存和性能"></a>内存和性能</h2><p>在JavaScript中，添加到页面上的事件处理程序数量将会直接关系到页面的整体运行性能。我们可以采用下面的方式来提高页面的性能：</p>
+<h3 id="事件代理"><a href="#事件代理" class="headerlink" title="事件代理"></a>事件代理</h3><p>对于事件处理程序过多问题的解决方法就是事件代理。事件代理利用了事件冒泡，只对一个DOM指定事件处理程序，就可以管理某一类的事件。例如，click事件会一直冒泡到document层次，所以只要给document添加一个事件处理程序，而不需要给每一个div添加click事件处理程序。以下面的html代码为例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"list"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"list1"</span>&gt;</span>it's list1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"list2"</span>&gt;</span>it's list2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"list3"</span>&gt;</span>it's list3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果一个个给li添加点击事件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> list1 = <span class="built_in">document</span>.getElementById(<span class="string">'list1'</span>);</span><br><span class="line"><span class="keyword">const</span> list2 = <span class="built_in">document</span>.getElementById(<span class="string">'list2'</span>);</span><br><span class="line"><span class="keyword">const</span> list3 = <span class="built_in">document</span>.getElementById(<span class="string">'list3'</span>);</span><br><span class="line">list1.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'click list1'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">list2.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'click list2'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">list3.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'click list3'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>如果使用事件代理：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ul = <span class="built_in">document</span>.getElementById(<span class="string">'list'</span>);</span><br><span class="line">ul.addEventListener(<span class="string">'click'</span>, (event) =&gt; &#123;</span><br><span class="line">    <span class="keyword">switch</span>(event.target.id) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'list1'</span>:</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'click list1'</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'list2'</span>:</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'click list2'</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'list3'</span>:</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'click list3'</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>在上面的代码里只为ul元素添加了一个click事件。由于事件冒泡，在这个事件处理程序里，我们可以通过检测id来采取适当的操作。达成的效果和一个个添加是一样的，但是这样占用的内存更小。</p>
+<p>使用事件代理有以下好处：</p>
+<ol>
+<li>document对象很快就可以访问，只要可点击的元素呈现在页面上，那么这个元素就立即具备了相应的功能。</li>
+<li>节省内存，能够提升整体性能。</li>
+<li>在页面中设置事件处理程序花的时间更少，因为只对一个DOM添加了事件处理程序。</li>
+</ol>
+<p>比较适合使用事件代理的事件有：</p>
+<ul>
+<li>click</li>
+<li>mousedown</li>
+<li>mouseup</li>
+<li>keyup</li>
+<li>keydown</li>
+<li>keypress</li>
+</ul>
+<p>而一些像mouseover、mouseout之类的则不合适。</p>
+<h3 id="移除事件处理程序"><a href="#移除事件处理程序" class="headerlink" title="移除事件处理程序"></a>移除事件处理程序</h3><p>每当将事件处理程序指定给元素时，运行中的浏览器代码与支持页面交互的JavaScript代码之间就会建立一个连接。这种链接越多，页面执行也就越慢，因此我们需要在事件处理程序不再起作用时把它删掉。</p>
+<p>有两种情况会造成，事件处理程序不被垃圾回收程序移除，将会永远的占据内存空间：</p>
+<ol>
+<li>从文档中移除带事件处理程序的元素时。如果通过innerHTML来删除元素，将会无法回收事件处理程序。</li>
+<li>卸载页面的时候，不过似乎IE8+的浏览器都会自动回收。</li>
+</ol>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>JavaScript高级程序设计-第13章 事件</p>
+<p><a href="https://www.w3.org/TR/DOM-Level-3-Events/#dom-event-architecture" target="_blank" rel="noopener">DOM Event Architecture</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model/Events" target="_blank" rel="noopener">事件及DOM</a></p>
+<p><a href="https://www.cnblogs.com/hustskyking/p/problem-javascript-event.html" target="_blank" rel="noopener">JavaScript事件机制</a></p>
+<p><a href="http://www.codeceo.com/article/javascript-event-anay.html" target="_blank" rel="noopener">最详细的JavaScript和事件解读</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/23059366" target="_blank" rel="noopener">JavaScript 浏览器事件解读</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/01/js的垃圾收集/" rel="next" title="js的垃圾收集">
+                <i class="fa fa-chevron-left"></i> js的垃圾收集
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/13/浏览器缓存机制/" rel="prev" title="浏览器缓存机制">
+                浏览器缓存机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar1.jpg" alt="Zachery Wu">
+            
+              <p class="site-author-name" itemprop="name">Zachery Wu</p>
+              <p class="site-description motion-element" itemprop="description">吴子轩的个人博客</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#事件流"><span class="nav-number">1.</span> <span class="nav-text">事件流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件处理程序"><span class="nav-number">2.</span> <span class="nav-text">事件处理程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存和性能"><span class="nav-number">3.</span> <span class="nav-text">内存和性能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件代理"><span class="nav-number">3.1.</span> <span class="nav-text">事件代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移除事件处理程序"><span class="nav-number">3.2.</span> <span class="nav-text">移除事件处理程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zachery Wu</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">62k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">16 分钟</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.1</div>
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.1"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
