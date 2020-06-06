@@ -1,7 +1,7 @@
 ---
 title: vue.js双向数据绑定
 date: 2019-03-06 16:45:01
-tags: vue.js学习
+tags: Vue
 ---
 
 ## 前言
