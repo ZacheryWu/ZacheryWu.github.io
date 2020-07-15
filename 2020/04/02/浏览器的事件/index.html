@@ -103,13 +103,13 @@
 <meta property="og:site_name" content="Zachery Wu">
 <meta property="og:description" content="事件是将JavaScript和网页连接到一起的主要方式。为了能够使用交互完成交互，我们需要了解事件的传播(事件流)，以及事件的处理和使用方式。 事件流在浏览器的发展过程中，IE和Netscape团队提出了完全相反的事件流概念，也就是我们常说的事件冒泡和事件捕获，后面w3c为了统一事件流，制定了统一的标准—-先捕获再冒泡。 DOM事件模型分为三个阶段：事件捕获阶段，处于目标阶段、事件冒泡阶段。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2020/04/02/images/eventflow.svg">
-<meta property="og:image" content="http://yoursite.com/2020/04/02/images/1585834879294.png">
-<meta property="og:updated_time" content="2020-07-15T13:47:34.536Z">
+<meta property="og:image" content="http://yoursite.com/images/eventflow.svg">
+<meta property="og:image" content="http://yoursite.com/images/1585834879294.png">
+<meta property="og:updated_time" content="2020-07-15T14:09:53.365Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浏览器的事件">
 <meta name="twitter:description" content="事件是将JavaScript和网页连接到一起的主要方式。为了能够使用交互完成交互，我们需要了解事件的传播(事件流)，以及事件的处理和使用方式。 事件流在浏览器的发展过程中，IE和Netscape团队提出了完全相反的事件流概念，也就是我们常说的事件冒泡和事件捕获，后面w3c为了统一事件流，制定了统一的标准—-先捕获再冒泡。 DOM事件模型分为三个阶段：事件捕获阶段，处于目标阶段、事件冒泡阶段。">
-<meta name="twitter:image" content="http://yoursite.com/2020/04/02/images/eventflow.svg">
+<meta name="twitter:image" content="http://yoursite.com/images/eventflow.svg">
 
 
 
@@ -413,10 +413,10 @@
 <li>事件触发地点往document方向，冒泡前进，遇到注册的冒泡阶段就会立即执行。</li>
 </ol>
 <p>配上一张w3c的说明图：</p>
-<p><img src="..\images\eventflow.svg" alt="Graphical representation of an event dispatched in a DOM tree using the DOM event flow"></p>
+<p><img src="\images\eventflow.svg" alt="Graphical representation of an event dispatched in a DOM tree using the DOM event flow"></p>
 <p>以下代码可以很好的说明上面的顺序：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s1 = <span class="built_in">document</span>.getElementById(<span class="string">'s1'</span>);</span><br><span class="line"><span class="keyword">const</span> s2 = <span class="built_in">document</span>.getElementById(<span class="string">'s2'</span>);</span><br><span class="line"><span class="keyword">const</span> s3 = <span class="built_in">document</span>.getElementById(<span class="string">'s3'</span>);</span><br><span class="line">s1.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'s1'</span>);</span><br><span class="line">&#125;, <span class="literal">true</span>)</span><br><span class="line">s2.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'s2 冒泡'</span>);</span><br><span class="line">&#125;, <span class="literal">false</span>)</span><br><span class="line">s2.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'s2 捕获'</span>);</span><br><span class="line">&#125;, <span class="literal">true</span>)</span><br><span class="line">s3.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'s3 冒泡'</span>)</span><br><span class="line">&#125;, <span class="literal">true</span>)</span><br><span class="line">s3.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'s3 捕获'</span>)</span><br><span class="line">&#125;, <span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="..\images\1585834879294.png" alt="1585834879294"></p>
+<p><img src="\images\1585834879294.png" alt="1585834879294"></p>
 <p>(注意这里的s3是先触发的冒泡事件，因为s3上先注册冒泡事件，并且s3是最底层元素)</p>
 <h2 id="事件处理程序"><a href="#事件处理程序" class="headerlink" title="事件处理程序"></a>事件处理程序</h2><p>有三种方法为一个DOM元素注册事件回调。</p>
 <ol>
