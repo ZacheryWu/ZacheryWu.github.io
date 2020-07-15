@@ -103,16 +103,16 @@
 <meta property="og:site_name" content="Zachery Wu">
 <meta property="og:description" content="页面的性能好通常是指页面加载速度快，用户交互流畅。其中主要有加载速度和交互流畅这两个部分，为了能够提高页面的加载速度，使页面更加流畅我们需要去了解一些浏览器加载页面和渲染页面的原理。 从在导航栏输入url按下回车开始，主要涉及到以下几个方面：  导航 响应 解析 渲染 交互  导航导航是一个加载一个页面的第一步，是指从输入url或者提交表单到和对应的服务器建立连接的这个过程。主要包括下面三步：">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="d:/hexo/blog/source/images/ssl.jpg">
-<meta property="og:image" content="d:/hexo/blog/source/images/congestioncontrol.jpg">
-<meta property="og:image" content="d:/hexo/blog/source/images/cssom-tree.png">
-<meta property="og:image" content="d:/hexo/blog/source/images/render-tree-construction.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/18/images/ssl.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/18/images/congestioncontrol.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/18/images/cssom-tree.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/18/images/render-tree-construction.png">
 <meta property="og:image" content="c:/Users/zacheryWu/Desktop/visa_network.png">
-<meta property="og:updated_time" content="2020-05-13T23:55:20.053Z">
+<meta property="og:updated_time" content="2020-07-15T13:47:34.538Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浏览器的工作原理">
 <meta name="twitter:description" content="页面的性能好通常是指页面加载速度快，用户交互流畅。其中主要有加载速度和交互流畅这两个部分，为了能够提高页面的加载速度，使页面更加流畅我们需要去了解一些浏览器加载页面和渲染页面的原理。 从在导航栏输入url按下回车开始，主要涉及到以下几个方面：  导航 响应 解析 渲染 交互  导航导航是一个加载一个页面的第一步，是指从输入url或者提交表单到和对应的服务器建立连接的这个过程。主要包括下面三步：">
-<meta name="twitter:image" content="d:/hexo/blog/source/images/ssl.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/18/images/ssl.jpg">
 
 
 
@@ -373,7 +373,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">9.6k</span>
+                <span title="本文字数">9.5k</span>
               
 
               
@@ -431,11 +431,11 @@
 <li>双方协商生成对话密钥</li>
 <li>使用生成的对话密钥进行通信</li>
 </ol>
-<p><img src="D:\hexo\blog\source\images\ssl.jpg" alt="ssl"></p>
+<p><img src="..\images\ssl.jpg" alt="ssl"></p>
 <p> 经过TCP连接和TLS协商，浏览器终于可以安全的发起请求了，接下来就是网络请求的部分</p>
 <h2 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h2><p>建立连接之后，浏览器会向服务器发起请求，作为一个网站，通常请求的第一个资源是html文件，服务器会把html文件和一些头信息一起返回。</p>
 <h3 id="慢启动"><a href="#慢启动" class="headerlink" title="慢启动"></a>慢启动</h3><p>而由于TCP的慢启动，第一块内容通常是小于14kb的，因此这也是我们进行优化时需要注意的一个点，也就是“14kb原则”。TCP的慢启动是指TCP均衡网络传输速度的算法，慢启动然后逐渐增加发送数据的数量，直到达到网络的最大带宽。在收到初始包之后, 服务器会将下一个包的大小加倍到大约28kb。 后续的包依次是前一个包大小的二倍直到达到预定的阈值，或者遇到拥塞。</p>
-<p><img src="D:\hexo\blog\source\images\congestioncontrol.jpg" alt="congestioncontrol"></p>
+<p><img src="..\images\congestioncontrol.jpg" alt="congestioncontrol"></p>
 <h3 id="拥塞"><a href="#拥塞" class="headerlink" title="拥塞"></a>拥塞</h3><p>在客户端和服务端进行数据传递时，通过确认帧也就是ACK来确认包的正确接受，而网络传输的数量是有限的，当传输的数据超过传输数量的上限，就会造成包的丢失，也就是丢包。因此我们需要使用拥塞控制算法来对网络传输的数据量进行控制。</p>
 <h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>浏览器接收到第一块信息之后就可以开始解析了，会把接收到的数据解析成DOM、CSSOM这样的浏览器能够理解的数据形式，然后再通过渲染器把DOM和CSSOM绘制成页面。</p>
 <p>即便浏览器请求的HTML是大于14kb的，浏览器也会在第一块数据到达之后就尝试解析。这也是为什么要求在前14kb中要包含浏览器渲染的首屏的全部内容。</p>
@@ -453,12 +453,12 @@
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123; <span class="attribute">font-size</span>: <span class="number">16px</span> &#125;</span><br><span class="line"><span class="selector-tag">p</span> &#123; <span class="attribute">font-weight</span>: bold &#125;</span><br><span class="line"><span class="selector-tag">span</span> &#123; <span class="attribute">color</span>: red &#125;</span><br><span class="line"><span class="selector-tag">p</span> <span class="selector-tag">span</span> &#123; <span class="attribute">display</span>: none &#125;</span><br><span class="line"><span class="selector-tag">img</span> &#123; <span class="attribute">float</span>: right &#125;</span><br></pre></td></tr></table></figure>
 <p>span标签内的任何置于body内的文本的font-size都为16px，并且字体颜色为红色，font-size属性从body继承到span中，不过如果某个span是在p标签下的，那么这个标签不予显示。</p>
 <p>根据上面的分析，得到的CSSOM如下:</p>
-<p><img src="D:\hexo\blog\source\images\cssom-tree.png" alt="cssom-tree"></p>
+<p><img src="..\images\cssom-tree.png" alt="cssom-tree"></p>
 <p>需要注意，这还并不是最终展示使用的CSSOM，因为每个节点的样式都还需要结合浏览器的默认样式（也就是我们在浏览开发者工具中看到的user-agent样式），也就是我们不提供任何自定义样式时的默认样式，我们的样式只是去替换了这些样式。</p>
 <h3 id="JavaScript编译"><a href="#JavaScript编译" class="headerlink" title="JavaScript编译"></a>JavaScript编译</h3><p>当CSS被解析并创建CSSOM时，其他资源，包括JavaScript文件正在下载（多亏了preload scanner）。JavaScript被解释、编译、解析和执行。脚本被解析为抽象语法树。一些浏览器引擎使用”Abstract Syntax Tree“并将其传递到解释器中，输出在主线程上执行的字节码。这就是所谓的JavaScript编译。</p>
 <h2 id="渲染"><a href="#渲染" class="headerlink" title="渲染"></a>渲染</h2><p>前面已经够构建好了DOM树和CSSOM树，这两个是完全独立的树，分别描述文档的不同信息，DOM树描述文档内容，CSSOM树描述对文档应用的样式规则。将这两者结合起来得到的渲染树，让浏览器在屏幕上渲染像素。</p>
 <h3 id="合并生成渲染树"><a href="#合并生成渲染树" class="headerlink" title="合并生成渲染树"></a>合并生成渲染树</h3><p>渲染的第一步就是把DOM树和CSSOM树合并生成渲染树，渲染树包含页面上所有的可见元素的内容以及对应的样式信息。</p>
-<p><img src="D:\hexo\blog\source\images\render-tree-construction.png" alt="render-tree-construction"></p>
+<p><img src="..\images\render-tree-construction.png" alt="render-tree-construction"></p>
 <p>构建渲染树的过程中浏览器完成了以下工作：</p>
 <ol>
 <li>从根节点开始遍历DOM树的可见节点。对于某些不可见的节点，由于不会渲染输出，所以被忽略，如head标签，元标签等等。对于CSSOM中display：none的节点也不会渲染输出，被忽略。</li>

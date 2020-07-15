@@ -103,15 +103,15 @@
 <meta property="og:site_name" content="Zachery Wu">
 <meta property="og:description" content="js主要有浏览器和node这两个执行环境，虽说node采用了V8作为js的解析引擎，但使用了libuv来进行I/O处理。因此js在浏览器和node端的事件循环不一样，也导致相同代码的执行结果可能不一样。 浏览器端浏览器端的事件循环分为三块：  执行栈 宏任务队列(macro-task) 微任务队列(micro-task)   执行栈执行栈，其实就是执行上下文栈，之前在作用域链的文章中也曾经介绍过">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="d:/hexo/blog/source/images/16740fa4cd9c6937">
-<meta property="og:image" content="d:/hexo/blog/source/images/1">
-<meta property="og:image" content="d:/hexo/blog/source/images/node11.gif">
-<meta property="og:image" content="d:/hexo/blog/source/images/node10.gif">
-<meta property="og:updated_time" content="2020-03-31T14:44:53.647Z">
+<meta property="og:image" content="http://yoursite.com/2020/03/31/images/16740fa4cd9c6937">
+<meta property="og:image" content="http://yoursite.com/2020/03/31/images/1">
+<meta property="og:image" content="http://yoursite.com/2020/03/31/images/node11.gif">
+<meta property="og:image" content="http://yoursite.com/2020/03/31/images/node10.gif">
+<meta property="og:updated_time" content="2020-07-15T13:47:34.536Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js的事件循环">
 <meta name="twitter:description" content="js主要有浏览器和node这两个执行环境，虽说node采用了V8作为js的解析引擎，但使用了libuv来进行I/O处理。因此js在浏览器和node端的事件循环不一样，也导致相同代码的执行结果可能不一样。 浏览器端浏览器端的事件循环分为三块：  执行栈 宏任务队列(macro-task) 微任务队列(micro-task)   执行栈执行栈，其实就是执行上下文栈，之前在作用域链的文章中也曾经介绍过">
-<meta name="twitter:image" content="d:/hexo/blog/source/images/16740fa4cd9c6937">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/31/images/16740fa4cd9c6937">
 
 
 
@@ -372,7 +372,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">5.7k</span>
+                <span title="本文字数">5.6k</span>
               
 
               
@@ -413,7 +413,7 @@
 <li>宏任务队列(macro-task)</li>
 <li>微任务队列(micro-task)</li>
 </ol>
-<p><img src="D:\hexo\blog\source\images\16740fa4cd9c6937" alt="img"></p>
+<p><img src="..\images\16740fa4cd9c6937" alt="img"></p>
 <h4 id="执行栈"><a href="#执行栈" class="headerlink" title="执行栈"></a>执行栈</h4><p>执行栈，其实就是执行上下文栈，之前在作用域链的文章中也曾经介绍过。执行上下文栈是用来保存执行上下文的一个栈结构，先进后出。在一段js代码开始执行前，会先把全局的执行上下文压入栈中，然后根据栈顶的执行上下文来执行代码，在执行的过程中，如果遇到了函数，也会创建函数的执行上下文，并且压入栈中，当这个函数执行完毕，就会把这个函数对应的执行上下文弹出，当整段代码执行完毕，也会把全局的执行上下文从栈中弹出，代表着代码执行的结束。</p>
 <p>而在执行栈中的代码全部执行完毕后，就回去宏任务队列和微任务队列中取出任务执行。</p>
 <h4 id="宏任务队列"><a href="#宏任务队列" class="headerlink" title="宏任务队列"></a>宏任务队列</h4><p>除了同步执行的任务，还有一些异步执行的任务会被放到宏任务队列中，如：</p>
@@ -435,7 +435,7 @@
 <li>V8引擎将结果返回给用户</li>
 </ol>
 <h4 id="node-的事件循环"><a href="#node-的事件循环" class="headerlink" title="node 的事件循环"></a>node 的事件循环</h4><p>libuv引擎中的事件循环分为六个阶段，按照下图的顺序反复执行。每到一个阶段都会从对应的回调队列中去除函数执行。当队列为空或者执行的回调函数数量达到了阈值就会进入下一个阶段的执行。</p>
-<p><img src="D:\hexo\blog\source\images\1" alt="img"></p>
+<p><img src="..\images\1" alt="img"></p>
 <p>简单描述以下就是：</p>
 <ol>
 <li>外部输入数据</li>
@@ -458,9 +458,9 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'timer1'</span>)</span><br><span class="line">    <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'promise1'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'timer2'</span>)</span><br><span class="line">    <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'promise2'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line">node10:<span class="function"><span class="params">timer1</span>=&gt;</span><span class="function"><span class="params">timer2</span>=&gt;</span><span class="function"><span class="params">promise1</span>=&gt;</span>promise2</span><br><span class="line">node11:<span class="function"><span class="params">timer1</span>=&gt;</span><span class="function"><span class="params">promise1</span>=&gt;</span><span class="function"><span class="params">timer2</span>=&gt;</span>promise2</span><br></pre></td></tr></table></figure>
 <p><a href="https://juejin.im/post/5c337ae06fb9a049bc4cd218" target="_blank" rel="noopener">这篇文章</a>的 这两张图十分形象</p>
 <p>node11: </p>
-<p><img src="D:\hexo\blog\source\images\node11.gif" alt="img"></p>
+<p><img src="..\images\node11.gif" alt="img"></p>
 <p>node10:</p>
-<p><img src="D:\hexo\blog\source\images\node10.gif" alt="img"></p>
+<p><img src="..\images\node10.gif" alt="img"></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>浏览器和node11在异步的处理上达到了一样的结果，而在node11之前的版本则会先处理整个宏观队列，导致不同的结果。</p>
 <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://juejin.im/post/5c337ae06fb9a049bc4cd218" target="_blank" rel="noopener">浏览器与Node的事件循环(Event Loop)有何区别?</a><br><a href="https://juejin.im/post/5ba32171f265da0ab719a6d7" target="_blank" rel="noopener">[译] 理解 JavaScript 中的执行上下文和执行栈</a><br>掘金小册-前端面试之道-Event Loop</p>
 
