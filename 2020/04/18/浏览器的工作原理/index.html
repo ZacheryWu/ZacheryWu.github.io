@@ -107,8 +107,8 @@
 <meta property="og:image" content="http://yoursite.com/images/congestioncontrol.jpg">
 <meta property="og:image" content="http://yoursite.com/images/cssom-tree.png">
 <meta property="og:image" content="http://yoursite.com/images/render-tree-construction.png">
-<meta property="og:image" content="c:/Users/zacheryWu/Desktop/visa_network.png">
-<meta property="og:updated_time" content="2020-07-15T14:09:53.365Z">
+<meta property="og:image" content="http://yoursite.com/images/visa_network.png">
+<meta property="og:updated_time" content="2020-07-15T14:17:02.050Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浏览器的工作原理">
 <meta name="twitter:description" content="页面的性能好通常是指页面加载速度快，用户交互流畅。其中主要有加载速度和交互流畅这两个部分，为了能够提高页面的加载速度，使页面更加流畅我们需要去了解一些浏览器加载页面和渲染页面的原理。 从在导航栏输入url按下回车开始，主要涉及到以下几个方面：  导航 响应 解析 渲染 交互  导航导航是一个加载一个页面的第一步，是指从输入url或者提交表单到和对应的服务器建立连接的这个过程。主要包括下面三步：">
@@ -478,7 +478,7 @@
 <p>当页面元素比较多时，回流是很耗时的，而且回流发生时也必然会发生重绘，所以我们应该尽量的避免回流的出现。</p>
 <h2 id="交互"><a href="#交互" class="headerlink" title="交互"></a>交互</h2><p>主线程绘制完页面，似乎一切已经结束了，然而并不是，当页面中有JS，并且JS中的操作都在onload事件中时，主线程会去解析js，这时页面依旧是无法操作的，直到js解析完成，主线程才会空闲下来，页面才可以进行点击、滚动等操作。</p>
 <p>TTI(time to interactive)是指从第一个请求的DNS解析开始，到页面可以交互所用的时间，而可交互是指在页面首次绘制完成之后，页面可以在50ms内对用户操作做出反应的交互。如果主线程被占用，将导致TTI大大延长，极大的影响用户的体验，因此要尽可能地避免占用主线程。</p>
-<p><img src="C:\Users\zacheryWu\Desktop\visa_network.png" alt="visa_network"></p>
+<p><img src="\images\visa_network.png" alt="visa_network"></p>
 <p>如上图中的情况，解析JS完全占用了主线程1.5s左右的时间，在这段时间内，用户的点击、滚动等操作都不会被相应。(那么这些操作会保存下来，等主线程空闲之后继续执行吗？还是直接舍弃掉呢？)</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>经过这次的学习，对于浏览器渲染页面的过程有了了解，虽然没有深入到更深的层次，但是对于性能优化的理解，也是很有帮助的。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/Performance/浏览器渲染页面的工作原理" target="_blank" rel="noopener">渲染页面：浏览器的工作原理</a></p>
@@ -599,7 +599,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
