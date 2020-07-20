@@ -14,7 +14,7 @@ tags:
 2. 宏任务队列(macro-task)
 3. 微任务队列(micro-task)
 
-![img](D:\hexo\blog\source\images\16740fa4cd9c6937)
+![img](\images\16740fa4cd9c6937)
 
 #### 执行栈
 
@@ -58,7 +58,7 @@ node端的事件循环就复杂了很多，先来简单介绍一下node.js的运
 
 libuv引擎中的事件循环分为六个阶段，按照下图的顺序反复执行。每到一个阶段都会从对应的回调队列中去除函数执行。当队列为空或者执行的回调函数数量达到了阈值就会进入下一个阶段的执行。
 
-![img](D:\hexo\blog\source\images\1)
+![img](\images\1)
 
 简单描述以下就是：
 
@@ -105,11 +105,11 @@ node11:timer1=>promise1=>timer2=>promise2
 
 node11: 
 
-![img](D:\hexo\blog\source\images\node11.gif)
+![img](\images\node11.gif)
 
 node10:
 
-![img](D:\hexo\blog\source\images\node10.gif)
+![img](\images\node10.gif)
 
 ### 总结
 
